@@ -16,12 +16,15 @@ public class UIManager : MonoBehaviour
 
     private const float kMaxTimeSecsLevel1 = 20; 
     public const int kMaxAmtShields = 5;
-    public int startAmtShields, startAmtPowerUps;
-
 
     // Start is called before the first frame update
     void Start()
     {
+       int startLivesAmt = 3;
+       Debug.Log("StartLives = " + startLivesAmt.ToString());
+       int startShieldsAmt = 2;
+       Debug.Log("StartShields = " + startShieldsAmt.ToString());
+
        // get the start time of the level
        startTime = Time.time; 
        string minutes = ((int)kMaxTimeSecsLevel1 / 60).ToString();
@@ -30,11 +33,10 @@ public class UIManager : MonoBehaviour
        timerText.text = timeLeft;
        timeFinished = false;
 
-       // set the lightning and shield count 
-       startAmtPowerUps = PlayerController.kStartNumLives;
-       startAmtShields = PlayerController.kStartNumLives;
-       shieldUIText.text = startAmtShields.ToString() + "/" + kMaxAmtShields.ToString();
-       lightningUIText.text = startAmtPowerUps.ToString();
+       // set the lives and shield count
+       shieldUIText.text = startShieldsAmt.ToString() + "/" + kMaxAmtShields.ToString();
+       lightningUIText.text = startLivesAmt.ToString();
+
     }
 
     // Update is called once per frame
@@ -62,8 +64,9 @@ public class UIManager : MonoBehaviour
     void setShieldAndPowerUpCountText() {
         // Get Player Shield amount 
         shieldUIText.text = PlayerController.NumOfShields.ToString() + "/" + kMaxAmtShields.ToString();
-        lightningUIText.text = PlayerController.NumOfPowerUps.ToString();  
+        lightningUIText.text = PlayerController.NumOfLives.ToString();  
     }
+
     void setTimerText() {
 
        if (timeFinished) {
