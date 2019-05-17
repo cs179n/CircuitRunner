@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
             this.transform.position = this.currentRail.position;
+            
         }
     }
 
@@ -52,8 +53,23 @@ public class PlayerMovement : MonoBehaviour
             this.velocity += this.acceleration;
             this.transform.position += this.velocity;
             this.adjustPosition();
+            //this.adjustVelocity();
         }
         this.acceleration = Vector3.zero;
+    }
+
+    void adjustVelocity() {
+        float speed = this.velocity.magnitude;
+        float direction = Vector3.Dot(this.velocity.normalized, this.currentRail.transform.up.normalized);
+        this.velocity = Vector3.zero;
+        this.velocity = this.currentRail.transform.up * speed * direction;
+        // Vector3 projection = Vector3.Project(this.velocity, this.currentRail.up);
+        // Vector3 rejection = this.velocity - projection;
+        // Debug.DrawLine(this.transform.position, this.transform.position+projection, Color.green, 1f);
+        // Debug.DrawLine(this.transform.position, this.transform.position+rejection, Color.red, 1f);
+        // this.velocity = Vector3.zero;
+        // this.velocity += projection;
+        // this.velocity += rejection;
     }
 
     public void addForce(Vector3 force) {
@@ -108,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
                     this.transform.position = nextRail.GetComponent<Rail>().getBackPosition();
                     this.transform.position += nextRail.transform.up * horizontalDistance;
                     this.currentRail = nextRail.transform;
+                    this.adjustVelocity();
                 } else {
                     this.transform.position = this.currentRail.GetComponent<Rail>().getFrontPosition();
                     this.acceleration = Vector3.zero;
@@ -119,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
                     this.transform.position = prevRail.GetComponent<Rail>().getFrontPosition();
                     this.transform.position += -1 * prevRail.transform.up * horizontalDistance;
                     this.currentRail = prevRail.transform;
+                    this.adjustVelocity();
                 } else {
                     this.transform.position = this.currentRail.GetComponent<Rail>().getBackPosition();
                     this.acceleration = Vector3.zero;
