@@ -37,10 +37,10 @@ public class PlayerMovement : MonoBehaviour
             float zScale = this.transform.localScale.z;
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
                 this.addForce(forwardForce);
-                this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
+                // this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
             } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
-                this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
+                // this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
             } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
 

@@ -881,12 +881,12 @@ PrefabInstance:
     - target: {fileID: 1599675046565081286, guid: 6c29ace32006f39478fa3adb4d57343c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 161
+      value: 4.81
       objectReference: {fileID: 0}
     - target: {fileID: 1599675046565081286, guid: 6c29ace32006f39478fa3adb4d57343c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 144
+      value: 1.85
       objectReference: {fileID: 0}
     - target: {fileID: 1599675046565081286, guid: 6c29ace32006f39478fa3adb4d57343c,
         type: 3}
@@ -932,6 +932,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599675046565081286, guid: 6c29ace32006f39478fa3adb4d57343c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c29ace32006f39478fa3adb4d57343c, type: 3}
@@ -1023,7 +1028,7 @@ GameObject:
   - component: {fileID: 804426041}
   m_Layer: 0
   m_Name: ShieldPickUp
-  m_TagString: Untagged
+  m_TagString: Shield Pick Up
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1036,7 +1041,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804426040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.71, y: 2.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 430197919}
@@ -1441,7 +1446,7 @@ GameObject:
   - component: {fileID: 1287727026}
   m_Layer: 0
   m_Name: BatteryPickUp
-  m_TagString: Untagged
+  m_TagString: Battery Pick Up
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1454,7 +1459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287727025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.51, y: 4.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1050547151}
@@ -2158,7 +2163,7 @@ BoxCollider:
   m_GameObject: {fileID: 1742154879}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.2, y: 2.33, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}

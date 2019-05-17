@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public Sprite[] playerSprite;
 
@@ -13,21 +13,21 @@ public class PlayerController : MonoBehaviour
 
 
     // Player properties
-    private static int numOfLives = 3;
+    private static int playerLives = 3;
     private static int numOfShields = 2;
-    public static int NumOfLives { get => numOfLives; set => numOfLives = value; }
+    public static int NumOfLives { get => playerLives; set => playerLives = value; }
     public static int NumOfShields { get => numOfShields; set => numOfShields = value; }
     //######################################################################################
-    private static bool isDead;
-    public static bool IsDead { get => isDead; set => isDead = value; }
+    private static bool isGameOver;
+    public static bool IsDead { get => isGameOver; set => isGameOver = value; }
     //######################################################################################
 
     void start() 
     {
-        isDead = false;
+        isGameOver = false;
 
         // Init the num of shields and power ups
-        numOfLives = 3;
+        playerLives = 3;
         numOfShields = 2;  
 
         rb = GetComponent<Rigidbody> ();
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter (Collider other) 
     {
+        Debug.Log("Collison");
         if (other.gameObject.CompareTag ("Shield Pick Up")) 
         {      
             if (numOfShields < UIManager.kMaxAmtShields)
@@ -51,18 +52,17 @@ public class PlayerController : MonoBehaviour
         
         if (other.gameObject.CompareTag ("Battery Pick Up"))
         {
-            numOfLives++;
+            playerLives++;
             Destroy(other.gameObject);
         }  
 
         if (other.gameObject.CompareTag("Brick Wall"))
         {
-            if (numOfLives > 1) {
-                numOfLives--;
+            if (playerLives > 1) {
+                playerLives--;
             } else {
-                isDead = true;
+                isGameOver = true;
             }
-            playerRenderer.sprite = playerSprite[0];
         }
     }
 }

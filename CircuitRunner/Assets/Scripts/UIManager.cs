@@ -21,9 +21,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
        int startLivesAmt = 3;
-       Debug.Log("StartLives = " + startLivesAmt.ToString());
        int startShieldsAmt = 2;
-       Debug.Log("StartShields = " + startShieldsAmt.ToString());
 
        // get the start time of the level
        startTime = Time.time; 
@@ -51,7 +49,7 @@ public class UIManager : MonoBehaviour
     }
 
     void gameOverUpdate() {
-        if(PlayerController.IsDead) 
+        if(Player.IsDead) 
         {
             Vector4 temp;
 
@@ -63,8 +61,8 @@ public class UIManager : MonoBehaviour
     }
     void setShieldAndPowerUpCountText() {
         // Get Player Shield amount 
-        shieldUIText.text = PlayerController.NumOfShields.ToString() + "/" + kMaxAmtShields.ToString();
-        lightningUIText.text = PlayerController.NumOfLives.ToString();  
+        shieldUIText.text = Player.NumOfShields.ToString() + "/" + kMaxAmtShields.ToString();
+        lightningUIText.text = Player.NumOfLives.ToString();  
     }
 
     void setTimerText() {
@@ -82,7 +80,7 @@ public class UIManager : MonoBehaviour
            timerText.text = "0: 00";
 
            // player died
-           PlayerController.IsDead = true;
+           Player.IsDead = true;
            return; 
        }
 
