@@ -24,18 +24,26 @@ public class PlayerMovement : MonoBehaviour
         // Place the player on the closest rail
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
+            this.transform.rotation = this.currentRail.rotation;
+            this.transform.Rotate(0,0,90f);
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
             Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
             Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
-            if (Input.GetKey(KeyCode.D)) {
-                //this.moveHorizontal(this.currentRail.up);
+            
+            // Player controls
+            float xScale = this.transform.localScale.x;
+            float yScale = this.transform.localScale.y;
+            float zScale = this.transform.localScale.z;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
                 this.addForce(forwardForce);
-            } else if (Input.GetKey(KeyCode.A)) {
-                //this.moveHorizontal(-this.currentRail.up);
+                this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
+            } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
-            } else if (Input.GetKeyDown(KeyCode.W)) {
+                this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
+            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
-            } else if (Input.GetKeyDown(KeyCode.S)) {
+
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
                 this.moveVertical(-this.transform.up);
             }
         }
@@ -75,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         bool playerTrigger = this.setColliderTrigger(false);
         if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity)) {
             rail = hitInfo.collider.transform;
+            Debug.DrawRay(this.transform.position, direction, Color.green, 20f);
         }
         this.currentRail.GetComponent<Rail>().setColliderTrigger(railTrigger);
         this.setColliderTrigger(playerTrigger);
