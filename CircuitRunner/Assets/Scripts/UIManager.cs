@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
 
     public bool timeFinished;
 
-    private const float kMaxTimeSecsLevel1 = 20; 
+    private const float kMaxTimeSecsLevel1 = 300; 
     public const int kMaxAmtShields = 5;
 
     // Start is called before the first frame update
