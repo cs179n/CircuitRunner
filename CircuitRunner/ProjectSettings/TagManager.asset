@@ -7,6 +7,7 @@ TagManager:
   - Shield Pick Up
   - Battery Pick Up
   - Brick Wall
+  - Item
   layers:
   - Default
   - TransparentFX
