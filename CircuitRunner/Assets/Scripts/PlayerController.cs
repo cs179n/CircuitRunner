@@ -35,33 +35,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       updatePlayerMovement();
         
-    }
-
-    void updatePlayerMovement() {
-        // Player controls
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            this.transform.position = new Vector3(this.transform.position.x+5, this.transform.position.y, this.transform.position.z);
-            playerRenderer.sprite = playerSprite[1];
-        }
-        
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            this.transform.position = new Vector3(this.transform.position.x-5, this.transform.position.y, this.transform.position.z);
-            playerRenderer.sprite = playerSprite[0];
-        }
-        
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y+5, this.transform.position.z);
-        }
-        
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y-5, this.transform.position.z);
-        }
     }
 
     void OnTriggerEnter (Collider other) 

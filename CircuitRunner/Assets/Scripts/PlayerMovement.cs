@@ -40,10 +40,10 @@ public class PlayerMovement : MonoBehaviour
             } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
                 this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
-            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
 
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
                 this.moveVertical(-this.transform.up);
             }
         }
