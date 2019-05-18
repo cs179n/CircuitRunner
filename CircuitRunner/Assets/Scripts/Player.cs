@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -40,7 +37,6 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter (Collider other) 
     {
-        Debug.Log("Collison");
         if (other.gameObject.CompareTag ("Shield Pick Up")) 
         {      
             if (numOfShields < UIManager.kMaxAmtShields)
@@ -48,7 +44,7 @@ public class Player : MonoBehaviour
                 numOfShields++;
             }
             Destroy(other.gameObject);
-        } 
+        }   
         
         if (other.gameObject.CompareTag ("Battery Pick Up"))
         {
