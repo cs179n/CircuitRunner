@@ -45,19 +45,14 @@ public class UIManager : MonoBehaviour
 
        // get the current scene
        scene = SceneManager.GetActiveScene();
-       Debug.Log("Active Scene is '" + scene.name + "'.");
-
     }
 
     // Update is called once per frame
     void Update()
     {
-      
             setShieldAndPowerUpCountText();
             setTimerText();
-            gameOverUpdate();
-
-        
+            gameOverUpdate();  
     }
 
     void gameOverUpdate() {
@@ -85,6 +80,7 @@ public class UIManager : MonoBehaviour
             // .. if it reaches the restart delay...
             if(restartTimer >= restartDelay)
             {
+                Debug.Log("Restart Level");
                 // .. then reload the currently loaded level.
                 resetLevel1();
 
