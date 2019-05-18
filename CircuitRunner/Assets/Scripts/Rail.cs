@@ -10,7 +10,6 @@ public class Rail : MonoBehaviour
     public GameObject playerGO;
     public GameObject prevRail;
     public GameObject nextRail;
-    
 
     private float length;
 
@@ -61,9 +60,8 @@ public class Rail : MonoBehaviour
     public float getPlayerHorizontalDistance() {
         Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
         Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
-        float distance = horizontal.magnitude - this.length/2;
-        if (distance < 0f) return 0f;
-        return distance;
+        float distance = horizontal.magnitude - this.length/2f;
+        return (distance > 0f) ? distance : 0f;
     }
 
     public Vector3 getClosestPosition() {

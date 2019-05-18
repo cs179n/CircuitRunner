@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        this.followPosition(targetGO.transform.position);
-        this.followRotation(targetGO.transform.rotation);
+        //this.followPosition(targetGO.transform.position);
+        //this.followRotation(targetGO.transform.rotation);
     }
 
     void followPosition(Vector3 position) {

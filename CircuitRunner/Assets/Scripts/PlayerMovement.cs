@@ -39,15 +39,18 @@ public class PlayerMovement : MonoBehaviour
         if (this.currentRail) {
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
             Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
                 this.addForce(forwardForce);
                 this.spriteRenderer.flipX = false;
-            } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+            } 
+            else if (Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
                 this.spriteRenderer.flipX = true;
-            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+            } 
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+            } 
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
                 this.moveVertical(-this.transform.up);
             }
         }
@@ -56,27 +59,27 @@ public class PlayerMovement : MonoBehaviour
             this.velocity += this.acceleration;
             this.transform.position += this.velocity;
             this.adjustPosition();
-            this.adjustVelocity(this.currentRail.transform.up);
+            //this.adjustVelocity(this.currentRail.transform.up);
             this.adjustRotationZ();
         }
         this.acceleration = Vector3.zero;
     }
 
     void adjustRotationZ() {
+        // Rotate player to match the current rails direction
         Vector3 current = this.transform.forward;
         Vector3 target = this.currentRail.transform.up;
         float step = Time.deltaTime * this.cameraRotationSpeed;
         Vector3 newDir = Vector3.RotateTowards(current, target, step, 0f);
         this.transform.rotation = Quaternion.LookRotation(newDir);
+
+        // Keep the z-axis the same
+        float x = this.transform.rotation.eulerAngles.x;
+        float y = this.transform.rotation.eulerAngles.y;
+        this.transform.rotation = Quaternion.Euler(x,y,0);
     }
 
-    void adjustVelocity(Vector3 newDirection) {
-        // This function is called when the player moves to another rail
-        // Change the direction of velocity to be the same as the new rail. Magnitude stays the same.
-        float speed = this.velocity.magnitude;
-        float sign = Mathf.Sign(Vector3.Dot(this.velocity, newDirection));
-        this.velocity = newDirection * speed * sign;
-    }
+    
 
     public void addForce(Vector3 force) {
         this.acceleration += force;
@@ -87,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 point;
         this.findVerticalRail(direction, out rail, out point); // WARNING: Currently, this is not guaranteed to be a Rail
         if (rail) {
-            Debug.Log(">>>>> "+rail);
             Rail railScript = rail.GetComponent<Rail>();
             this.transform.position = point;
             Vector3 newPos = railScript.getClosestPosition();
@@ -100,10 +102,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hitInfo;
         Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition() : this.transform.position;
         int layerMask = 1 << 9; // Rail layer is 9
-        // TODO: MAKE SURE THE RAY CAN ONLY COLLIDE WITH RAILS (NOT PLAYER, ENEMIES, ITEMS, ETC)
-        // Currently, this is accomplished by turning off player and current rail's collider isTrigger temporarily.
-        // An improvement would be to add a layerMask for rails only. (While still turning off current rail.)
-
         bool railTrigger = this.currentRail.GetComponent<Rail>().setColliderTrigger(false);
         bool playerTrigger = this.setColliderTrigger(false);
         if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity, layerMask)) {
@@ -121,12 +119,15 @@ public class PlayerMovement : MonoBehaviour
         // If player has moved beyond the current rail...
         Rail railScript = this.currentRail.GetComponent<Rail>();
         float horizontalDistance = railScript.getPlayerHorizontalDistance();
+        // TODO: In case the horizontal distance is greater than the prev/next rail
+        // It should recursively find the following rail until horizontal distance is 0.
         if (horizontalDistance > 0f) {
             if (railScript.isClosestToFront()) {
                 Transform nextRail = railScript.getNextRail();
                 if (nextRail) {
                     Vector3 newPosition = nextRail.GetComponent<Rail>().getBackPosition();
                     this.changeCurrentRail(nextRail, newPosition, horizontalDistance, 1);
+                    this.adjustVelocity(nextRail.transform.up);
                 } else {
                     this.stopAt(this.currentRail.GetComponent<Rail>().getFrontPosition());
                 }
@@ -135,18 +136,27 @@ public class PlayerMovement : MonoBehaviour
                 if (prevRail) {
                     Vector3 newPosition = prevRail.GetComponent<Rail>().getFrontPosition();
                     this.changeCurrentRail(prevRail, newPosition, horizontalDistance, -1);
+                    this.adjustVelocity(-prevRail.transform.up);
                 } else {
                     this.stopAt(this.currentRail.GetComponent<Rail>().getBackPosition());
                 }
             }
+        } else { // horizontal <= 0
+            this.transform.position = this.currentRail.GetComponent<Rail>().getClosestPosition();
         }
+    }
+
+    void adjustVelocity(Vector3 newDirection) {
+        float speed = this.velocity.magnitude;
+        this.velocity = newDirection * speed;
     }
 
     void changeCurrentRail(Transform rail, Vector3 position, float horizontalDistance, float sign) {
         this.transform.position = position;
         this.transform.position += sign * rail.transform.up * horizontalDistance;
         this.currentRail = rail.transform;
-        //this.adjustVelocity(rail.transform.up);
+
+        //this.velocity = Vector3.zero;
     }
 
     void stopAt(Vector3 position) {
