@@ -9,13 +9,25 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 acceleration = Vector3.zero;
     public GameObject railContainer;
+    private Quaternion targetRotation = Quaternion.identity;
+    private SpriteRenderer spriteRenderer;
+    private BoxCollider boxCollider;
+
+    void Awake()
+    {
+        
+    }
 
     void Start()
     {
+        spriteRenderer = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        boxCollider = this.transform.GetChild(0).GetComponent<BoxCollider>();
+
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
             this.transform.position = this.currentRail.position;
         }
+        //this.transform.position += this.transform.up*200;
     }
 
     // Update is called once per frame
@@ -25,19 +37,16 @@ public class PlayerMovement : MonoBehaviour
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
-            Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
             Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
             if (Input.GetKey(KeyCode.D)) {
-                //this.moveHorizontal(this.currentRail.up);
                 this.addForce(forwardForce);
-                this.GetComponent<SpriteRenderer>().flipX = false;
+                this.spriteRenderer.flipX = false;
             } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
-                this.GetComponent<SpriteRenderer>().flipX = true;
-
-            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+                this.spriteRenderer.flipX = true;
+            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
-            } else if (Input.GetKeyDown(KeyCode.S)) {
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
                 this.moveVertical(-this.transform.up);
             }
         }
@@ -47,8 +56,30 @@ public class PlayerMovement : MonoBehaviour
             this.transform.position += this.velocity;
             this.adjustPosition();
             this.adjustVelocity(this.currentRail.transform.up);
+            this.adjustRotationZ();
         }
         this.acceleration = Vector3.zero;
+    }
+
+    void adjustRotationZ() {
+        // float dot = Mathf.Round(Vector3.Dot(this.transform.up,this.currentRail.transform.up)*100f)/100f;
+        
+        // if (dot != 0f) {
+        //     Debug.Log(dot);
+        //     float x = this.transform.rotation.eulerAngles.x;
+        //     float y = this.transform.rotation.eulerAngles.y;
+        //     float z = this.currentRail.rotation.eulerAngles.z + 90f;
+        //     this.targetRotation = Quaternion.Euler(x,y,z);
+        //     this.transform.rotation *= Quaternion.Lerp(Quaternion.identity, this.targetRotation, 0.01f);// this.targetRotation;
+        // } {
+        //     Debug.Log("zero");
+        // }
+        Vector3 current = this.transform.forward;
+        
+        Vector3 target = this.currentRail.transform.up;
+        Debug.DrawRay(transform.position, target*100f, Color.red, 1f);
+        Vector3 newDir = Vector3.RotateTowards(current, target, 0.08f, 0f);
+        this.transform.rotation = Quaternion.LookRotation(newDir);
     }
 
     void adjustVelocity(Vector3 newDirection) {
@@ -148,8 +179,8 @@ public class PlayerMovement : MonoBehaviour
     public bool setColliderTrigger(bool value) {
         // Sets the Collider's isTrigger to true or false
         // Returns the old value
-        bool oldValue = this.GetComponent<BoxCollider>().isTrigger;
-        this.GetComponent<BoxCollider>().isTrigger = value;
+        bool oldValue = this.boxCollider.isTrigger;
+        this.boxCollider.isTrigger = value;
         return oldValue;
     }
 }
