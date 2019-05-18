@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 46742536}
   - component: {fileID: 46742535}
   - component: {fileID: 46742534}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 57242771}
   - component: {fileID: 57242770}
   - component: {fileID: 57242769}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Middle 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +864,7 @@ GameObject:
   - component: {fileID: 516933330}
   - component: {fileID: 516933329}
   - component: {fileID: 516933328}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -878,8 +878,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516933326}
-  m_LocalRotation: {x: -0, y: -0, z: -0.36273617, w: 0.9318919}
-  m_LocalPosition: {x: 6.78, y: 7.49, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.027160011, w: 0.99963117}
+  m_LocalPosition: {x: 3.98, y: 8.73, z: 0}
   m_LocalScale: {x: 0.099999994, y: 5, z: 0.099999994}
   m_Children:
   - {fileID: 1176982326}
@@ -887,7 +887,7 @@ Transform:
   - {fileID: 1255053920}
   m_Father: {fileID: 1864888681}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42.537003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.1130002}
 --- !u!114 &516933328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2439,7 +2439,7 @@ GameObject:
   - component: {fileID: 1480532453}
   - component: {fileID: 1480532452}
   - component: {fileID: 1480532451}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bottom 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2790,7 +2790,7 @@ GameObject:
   - component: {fileID: 1576704135}
   - component: {fileID: 1576704134}
   - component: {fileID: 1576704133}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3727,7 +3727,7 @@ GameObject:
   - component: {fileID: 2006534591}
   - component: {fileID: 2006534590}
   - component: {fileID: 2006534594}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

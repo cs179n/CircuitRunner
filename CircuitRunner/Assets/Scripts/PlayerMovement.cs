@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion targetRotation = Quaternion.identity;
     private SpriteRenderer spriteRenderer;
     private BoxCollider boxCollider;
+    private float cameraRotationSpeed = 5f;
 
     void Awake()
     {
@@ -62,23 +63,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void adjustRotationZ() {
-        // float dot = Mathf.Round(Vector3.Dot(this.transform.up,this.currentRail.transform.up)*100f)/100f;
-        
-        // if (dot != 0f) {
-        //     Debug.Log(dot);
-        //     float x = this.transform.rotation.eulerAngles.x;
-        //     float y = this.transform.rotation.eulerAngles.y;
-        //     float z = this.currentRail.rotation.eulerAngles.z + 90f;
-        //     this.targetRotation = Quaternion.Euler(x,y,z);
-        //     this.transform.rotation *= Quaternion.Lerp(Quaternion.identity, this.targetRotation, 0.01f);// this.targetRotation;
-        // } {
-        //     Debug.Log("zero");
-        // }
         Vector3 current = this.transform.forward;
-        
         Vector3 target = this.currentRail.transform.up;
-        Debug.DrawRay(transform.position, target*100f, Color.red, 1f);
-        Vector3 newDir = Vector3.RotateTowards(current, target, 0.08f, 0f);
+        float step = Time.deltaTime * this.cameraRotationSpeed;
+        Vector3 newDir = Vector3.RotateTowards(current, target, step, 0f);
         this.transform.rotation = Quaternion.LookRotation(newDir);
     }
 
@@ -95,32 +83,38 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void moveVertical(Vector3 direction) {
-        Transform rail = this.findVerticalRail(direction); // WARNING: Currently, this is not guaranteed to be a Rail
+        Transform rail;
+        Vector3 point;
+        this.findVerticalRail(direction, out rail, out point); // WARNING: Currently, this is not guaranteed to be a Rail
         if (rail) {
+            Debug.Log(">>>>> "+rail);
             Rail railScript = rail.GetComponent<Rail>();
+            this.transform.position = point;
             Vector3 newPos = railScript.getClosestPosition();
             this.transform.position = newPos;
             this.currentRail = rail;
         }
     }
 
-    Transform findVerticalRail(Vector3 direction) {
-        Transform rail = null;
+    void findVerticalRail(Vector3 direction, out Transform rail, out Vector3 point) {
         RaycastHit hitInfo;
         Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition() : this.transform.position;
-
+        int layerMask = 1 << 9; // Rail layer is 9
         // TODO: MAKE SURE THE RAY CAN ONLY COLLIDE WITH RAILS (NOT PLAYER, ENEMIES, ITEMS, ETC)
         // Currently, this is accomplished by turning off player and current rail's collider isTrigger temporarily.
         // An improvement would be to add a layerMask for rails only. (While still turning off current rail.)
 
         bool railTrigger = this.currentRail.GetComponent<Rail>().setColliderTrigger(false);
         bool playerTrigger = this.setColliderTrigger(false);
-        if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity)) {
+        if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity, layerMask)) {
             rail = hitInfo.collider.transform;
+            point = hitInfo.point;
+        } else {
+            rail = null;
+            point = this.transform.position;
         }
         this.currentRail.GetComponent<Rail>().setColliderTrigger(railTrigger);
         this.setColliderTrigger(playerTrigger);
-        return rail;
     }
 
     void adjustPosition() {
