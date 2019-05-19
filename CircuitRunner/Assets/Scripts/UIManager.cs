@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     public bool timeFinished;
 
-    private const float kMaxTimeSecsLevel1 = 300; 
+    private const float kMaxTimeSecsLevel1 = 200; 
     public const int kMaxAmtShields = 5;
 
     int startLivesAmt = 3;
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     //############################################################
     // Level restart variables 
-    public float restartDelay = 10f;         // Time to wait before restarting the level
+    private float restartDelay = 5f;         // Time to wait before restarting the level
 
     public  Scene scene;
     float restartTimer;                     // Timer to count up to restarting the level

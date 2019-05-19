@@ -51,6 +51,7 @@ public class PauseMenuController : MonoBehaviour
         Time.timeScale = 0f;
 
         IsGamePause = true;
+
     }
 
     public void LoadMenu() 

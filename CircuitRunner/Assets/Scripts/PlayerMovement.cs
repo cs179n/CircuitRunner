@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Place the player on the closest rail
         this.currentRail = this.findClosestRail();
-        if (this.currentRail) {
+        if (this.currentRail && !PauseMenuController.IsGamePause) {
             this.transform.rotation = this.currentRail.rotation;
             this.transform.Rotate(0,0,90f);
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
@@ -35,23 +35,21 @@ public class PlayerMovement : MonoBehaviour
             float xScale = this.transform.localScale.x;
             float yScale = this.transform.localScale.y;
             float zScale = this.transform.localScale.z;
-            if (!PauseMenuController.IsGamePause) {
-                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-                    this.addForce(forwardForce);
-                    // this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
-                } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-                    this.addForce(-forwardForce);
-                    // this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
-                } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-                    this.moveVertical(this.transform.up);
-                } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-                    this.moveVertical(-this.transform.up);
-                }
+        
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+                this.addForce(forwardForce);
+                // this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
+            } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+                this.addForce(-forwardForce);
+                // this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
+            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+                this.moveVertical(this.transform.up);
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+                this.moveVertical(-this.transform.up);
             }
-
         }
 
-        if (this.currentRail) {
+        if (this.currentRail && !PauseMenuController.IsGamePause) {
             this.velocity += this.acceleration;
             this.transform.position += this.velocity;
             this.adjustPosition();
