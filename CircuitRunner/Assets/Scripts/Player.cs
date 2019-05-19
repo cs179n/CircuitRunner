@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
 
     public Rigidbody rb;
 
+    //#########################################################################################
+    private static AudioSource level1Music;
+    public static AudioSource Level1Music { get => level1Music; set => level1Music = value; }
+    //#########################################################################################
 
     // Player properties
     private static int playerLives = 3;
