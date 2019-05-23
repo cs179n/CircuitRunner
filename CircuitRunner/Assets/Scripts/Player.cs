@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     //#########################################################################################
 
     // Player properties
-    private static int playerLives = 3;
+    private static int playerLives = 100;
     private static int numOfShields = 2;
     public static int NumOfLives { get => playerLives; set => playerLives = value; }
     public static int NumOfShields { get => numOfShields; set => numOfShields = value; }
