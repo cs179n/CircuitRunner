@@ -59,9 +59,9 @@ public class Player : MonoBehaviour
                 isGameOver = true;
             }
         }
-        if (other.gameObject.CompareTag("Rail"))
+        if (other.gameObject.CompareTag("Win"))
         {
-             
+            playerLives = 69;
         }
     }
 }
