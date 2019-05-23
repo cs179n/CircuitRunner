@@ -38,10 +38,10 @@ public class PlayerMovement : MonoBehaviour
         
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
                 this.addForce(forwardForce);
-                // this.transform.localScale = new Vector3(Mathf.Abs(xScale), yScale, zScale);
+                this.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = false;
             } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
                 this.addForce(-forwardForce);
-                // this.transform.localScale = new Vector3(-Mathf.Abs(xScale), yScale, zScale);
+                this.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = true;
             } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.moveVertical(this.transform.up);
             } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
