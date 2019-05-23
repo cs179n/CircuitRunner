@@ -9,6 +9,14 @@ public class LogicGate : MonoBehaviour
     public enum GateType {
         And,
         Or,
+        Not,
+        Xor,
+        Nand,
+        Nor,
+        Xnor,
+        Odd,
+        Even,
+        AlwaysClosed,
         AlwaysOpen
     }
     public GateType gateType = GateType.And;
@@ -33,12 +41,34 @@ public class LogicGate : MonoBehaviour
             bool power = go.GetComponent<Rail>().getIsPowered();
             if (power) count++;
         }
+        int total = this.railInputs.Length;
         switch(this.gateType) {
             case GateType.And:
-                this.isPowered = (count == this.railInputs.Length && this.railInputs.Length >= 1);
+                this.isPowered = (count == total);
                 break;
             case GateType.Or:
-                this.isPowered = (count >= 1  && this.railInputs.Length >= 1);
+                this.isPowered = (count >= 1);
+                break;
+            case GateType.Not:
+                this.isPowered = (count == 0);
+                break;
+            case GateType.Xor:
+                this.isPowered = (count == 1);
+                break;
+            case GateType.Nand:
+                this.isPowered = (count < total);
+                break;
+            case GateType.Nor:
+                this.isPowered = (count == 0);
+                break;
+            case GateType.Xnor:
+                this.isPowered = (count == 0 || count == total);
+                break;
+            case GateType.Odd:
+                this.isPowered = (count % 2 != 0);
+                break;
+            case GateType.Even:
+                this.isPowered = (count % 2 == 0);
                 break;
             case GateType.AlwaysOpen:
                 this.isPowered = true;
@@ -47,25 +77,13 @@ public class LogicGate : MonoBehaviour
                 this.isPowered = false;
                 break;
         }
-        float ymove = 0f;
-        float zmove = 100f;
         Vector3 closedPosition = new Vector3(0f, 0f, 0f);
-        Vector3 openedPosition = new Vector3(0f, 0f, 10f);
+        Vector3 openedPosition = new Vector3(0f, 0f, 20f);
         float step = 10f * Time.deltaTime;
         if (this.isPowered) {
             this.transform.position = Vector3.MoveTowards(this.transform.position, openedPosition, step);
-            //topRight.localPosition = closedPosition + new Vector3(0f, ymove, zmove);
-            //topLeft.localPosition  = closedPosition  + new Vector3(0f, ymove, zmove);
-
-            //bottomRight.localPosition = closedPosition + new Vector3(0f, ymove, zmove);
-            //bottomLeft.localPosition  = closedPosition  + new Vector3(0f, ymove, zmove);
         } else {
             this.transform.position = Vector3.MoveTowards(this.transform.position, closedPosition, step);
-            //topRight.localPosition = closedPosition;
-            //topLeft.localPosition  = closedPosition;
-
-            //bottomRight.localPosition = closedPosition;
-            //bottomLeft.localPosition  = closedPosition;
         }
     }
 }

@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Win"))
         {
+            playerLives = 69;
             isWon = true;
         }
         if (other.gameObject.CompareTag("Mite"))
