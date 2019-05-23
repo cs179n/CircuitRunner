@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     public bool timeFinished;
 
-    private const float kMaxTimeSecsLevel1 = 200; 
+    private const float kMaxTimeSecsLevel1 = 45; 
     public const int kMaxAmtShields = 5;
 
     int startLivesAmt = 3;

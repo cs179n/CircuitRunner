@@ -6,6 +6,9 @@ public class LogicGate : MonoBehaviour
 {
     bool isPowered = false;
     public GameObject[] railInputs;
+    Vector3 offset = new Vector3(0, 0, 15f);
+    Vector3 setposition;
+    Vector3 offposition;
     public enum GateType {
         And,
         Or,
@@ -25,6 +28,8 @@ public class LogicGate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        setposition = this.transform.position;
+        offposition = this.transform.position + offset;
         // Child objects
         wall = this.transform.GetChild(0);
         // topLeft = this.transform.GetChild(1);
@@ -78,12 +83,13 @@ public class LogicGate : MonoBehaviour
                 break;
         }
         Vector3 closedPosition = new Vector3(0f, 0f, 0f);
-        Vector3 openedPosition = new Vector3(0f, 0f, 20f);
-        float step = 10f * Time.deltaTime;
+        //Vector3 openedPosition = new Vector3(0f, 0f, 20f);
+        float step = 30f * Time.deltaTime;
+
         if (this.isPowered) {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, openedPosition, step);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, offposition, step);
         } else {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, closedPosition, step);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, setposition, step);
         }
     }
 }

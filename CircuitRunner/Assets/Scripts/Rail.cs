@@ -77,7 +77,7 @@ public class Rail : MonoBehaviour
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
             float vDistance = this.getPlayerVerticalDistance(target);
-            if (vDistance >= -0.01f && vDistance <0.1f) timer = 3f;
+            if (vDistance >= -0.01f && vDistance < 0.1f) timer = 1.5f;
             Vector3 toPlayer = target.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;
@@ -126,7 +126,7 @@ public class Rail : MonoBehaviour
     }
 
     public void turnOnPower() {
-        this.timer = 3f;
+        this.timer = 1.5f;
     }
 
     public void turnOffPower() {
