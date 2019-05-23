@@ -10,9 +10,15 @@ public class Rail : MonoBehaviour
     public GameObject playerGO;
     public GameObject prevRail;
     public GameObject nextRail;
+    //public Material Powered;
+    //public Material Unpowered;
+    public RailsController Rails;
     
 
     private float length;
+    //private bool isPowered;
+    private float timer;
+    private 
 
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -56,6 +62,14 @@ public class Rail : MonoBehaviour
     void LateUpdate()
     {
         this.closestTransform.position = this.getClosestPosition();
+        if (timer > 0)
+        {
+            this.GetComponent<MeshRenderer>().material = Rails.GetPowered();
+            timer-= Time.deltaTime;
+        }
+        else {
+            this.GetComponent<MeshRenderer>().material = Rails.GetUnpowered();
+        }
     }
 
     public float getPlayerHorizontalDistance() {
@@ -68,10 +82,14 @@ public class Rail : MonoBehaviour
 
     public Vector3 getClosestPosition() {
         if (this.getPlayerHorizontalDistance() > 0f) {
+            //isPowered = true;
             float startDistance = (this.frontTransform.position - this.playerGO.transform.position).magnitude;
             float endDistance = (this.backTransform.position - this.playerGO.transform.position).magnitude;
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
+            timer = 3f;
+
+            //isPowered = false;
             Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0103945015, g: 0.1652382, b: 0.21939483, a: 1}
+  m_IndirectSpecularColor: {r: 0.011220082, g: 0.16477185, b: 0.21948263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -172,6 +172,7 @@ MonoBehaviour:
   playerGO: {fileID: 1742154879}
   prevRail: {fileID: 0}
   nextRail: {fileID: 0}
+  Rails: {fileID: 1864888682}
 --- !u!136 &46742535
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -283,6 +284,7 @@ MonoBehaviour:
   playerGO: {fileID: 1742154879}
   prevRail: {fileID: 2006534589}
   nextRail: {fileID: 0}
+  Rails: {fileID: 1864888682}
 --- !u!136 &57242770
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2507,6 +2509,7 @@ MonoBehaviour:
   playerGO: {fileID: 1742154879}
   prevRail: {fileID: 0}
   nextRail: {fileID: 0}
+  Rails: {fileID: 1864888682}
 --- !u!136 &1576704134
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3391,6 +3394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dba22c615a923469779645b3b311b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Powered: {fileID: 2100000, guid: 0a447a0385db02442a5343a294491113, type: 2}
+  Unpowered: {fileID: 2100000, guid: 9efb9798f7c15624d8ff4e0594832a7c, type: 2}
 --- !u!1 &1895600904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,6 +3639,7 @@ MonoBehaviour:
   playerGO: {fileID: 1742154879}
   prevRail: {fileID: 0}
   nextRail: {fileID: 57242767}
+  Rails: {fileID: 1864888682}
 --- !u!1 &2018777672
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RailsController : MonoBehaviour
 {
+    public Material Powered;
+    public Material Unpowered;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +22,11 @@ public class RailsController : MonoBehaviour
     void Update()
     {
         
+    }
+    public Material GetPowered() {
+        return Powered;
+    }
+    public Material GetUnpowered() {
+        return Unpowered;
     }
 }
