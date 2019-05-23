@@ -12,6 +12,7 @@ public class Rail : MonoBehaviour
     public GameObject nextRail;
 
     private float length;
+    private bool isPowered = false;
 
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -36,18 +37,15 @@ public class Rail : MonoBehaviour
     void Update()
     {
         this.length = (frontTransform.position - backTransform.position).magnitude;
+        if (this.playerGO.GetComponent<PlayerMovement>().getCurrentRail().gameObject.GetInstanceID() == this.GetInstanceID()) {
+            this.turnOnPower();
+            //this.transform.localScale = new Vector3(.5f,5f,.1f);
+        } else {
+            //this.turnOffPower();
+            //this.transform.localScale = new Vector3(.1f,5f,.1f);
+        }
 
-        //playerVector = playerGO.transform.position - this.transform.position;
-        //playerHorizontal = Vector3.Project(playerVector, this.transform.up);
-        //playerVertical = playerVector - playerHorizontal;
-
-        //playerVerticalDistance = playerVertical.magnitude;
-        //playerHorizontalDistance = this.getPlayerHorizontalDistance();
-        
-
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerVector, Color.white);
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerHorizontal, Color.red);
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerVertical, Color.green);
+        //this.transform.localScale = (this.isPowered) ? new Vector3(.5f,5f,.1f) : new Vector3(.1f,5f,.1f);
     }
 
     /// LateUpdate is called every frame, if the Behaviour is enabled.
@@ -57,11 +55,31 @@ public class Rail : MonoBehaviour
         this.closestTransform.position = this.getClosestPosition();
     }
 
+    public bool getIsPowered() {
+        return this.isPowered;
+    }
+    public void turnOnPower() {
+        this.isPowered = true;
+    }
+    public void turnOffPower() {
+        this.isPowered = false;
+    }
+    public void togglePower() {
+        this.isPowered = !this.isPowered;
+    }
+
     public float getPlayerHorizontalDistance() {
         Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
         Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
         float distance = horizontal.magnitude - this.length/2f;
         return (distance > 0f) ? distance : 0f;
+    }
+
+    public float getPlayerVerticalDistance() {
+        Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
+        Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
+        Vector3 vertical = toPlayer - horizontal;
+        return vertical.magnitude;
     }
 
     public Vector3 getClosestPosition() {

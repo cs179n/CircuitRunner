@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
         // Place the player on the closest rail
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
+            
+            this.currentRail.GetComponent<Rail>().turnOnPower();
+
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
             Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
             if (Input.GetKey(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
@@ -63,6 +66,10 @@ public class PlayerMovement : MonoBehaviour
             this.adjustRotationZ();
         }
         this.acceleration = Vector3.zero;
+    }
+
+    public Transform getCurrentRail() {
+        return this.currentRail;
     }
 
     void adjustRotationZ() {
@@ -119,8 +126,8 @@ public class PlayerMovement : MonoBehaviour
         // If player has moved beyond the current rail...
         Rail railScript = this.currentRail.GetComponent<Rail>();
         float horizontalDistance = railScript.getPlayerHorizontalDistance();
-        // TODO: In case the horizontal distance is greater than the prev/next rail
-        // It should recursively find the following rail until horizontal distance is 0.
+        // TODO: In case the horizontal distance is greater than the length of te prev/next rail,
+        //       it should recursively find the following rail until horizontal distance is 0.
         if (horizontalDistance > 0f) {
             if (railScript.isClosestToFront()) {
                 Transform nextRail = railScript.getNextRail();
