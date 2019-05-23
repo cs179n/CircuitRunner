@@ -59,5 +59,9 @@ public class Player : MonoBehaviour
                 isGameOver = true;
             }
         }
+        if (other.gameObject.CompareTag("Rail"))
+        {
+             
+        }
     }
 }

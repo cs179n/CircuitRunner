@@ -10,15 +10,11 @@ public class Rail : MonoBehaviour
     public GameObject playerGO;
     public GameObject prevRail;
     public GameObject nextRail;
-    //public Material Powered;
-    //public Material Unpowered;
     public RailsController Rails;
     
 
     private float length;
-    //private bool isPowered;
     private float timer;
-    private 
 
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -61,6 +57,7 @@ public class Rail : MonoBehaviour
     /// It is called after all Update functions have been called.
     void LateUpdate()
     {
+
         this.closestTransform.position = this.getClosestPosition();
         if (timer > 0)
         {
@@ -79,17 +76,21 @@ public class Rail : MonoBehaviour
         if (distance < 0f) return 0f;
         return distance;
     }
+    public float getPlayerVerticalDistance()
+    {
+        Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
+        Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
+        Vector3 vertical = toPlayer - horizontal;
+        return vertical.magnitude;
+    }
 
     public Vector3 getClosestPosition() {
         if (this.getPlayerHorizontalDistance() > 0f) {
-            //isPowered = true;
             float startDistance = (this.frontTransform.position - this.playerGO.transform.position).magnitude;
             float endDistance = (this.backTransform.position - this.playerGO.transform.position).magnitude;
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
-            timer = 3f;
-
-            //isPowered = false;
+            if (this.getPlayerVerticalDistance() >= -0.01f&& this.getPlayerVerticalDistance() <0.1f) timer = 3f;
             Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;
