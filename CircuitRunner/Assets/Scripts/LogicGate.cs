@@ -24,6 +24,7 @@ public class LogicGate : MonoBehaviour
 
     void Start()
     {
+        // Child objects
         topRight = this.transform.GetChild(0);
         topLeft = this.transform.GetChild(1);
         bottomRight = this.transform.GetChild(2);
