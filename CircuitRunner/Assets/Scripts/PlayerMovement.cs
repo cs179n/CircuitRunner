@@ -29,25 +29,6 @@ public class PlayerMovement : MonoBehaviour
             this.transform.Rotate(0,0,90f);
             Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
             Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
-            Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
-            
-            // Player controls
-            float xScale = this.transform.localScale.x;
-            float yScale = this.transform.localScale.y;
-            float zScale = this.transform.localScale.z;
-        
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-                this.addForce(forwardForce);
-                this.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = false;
-            } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-                this.addForce(-forwardForce);
-                this.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = true;
-            } else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
-                this.moveVertical(this.transform.up);
-            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
-                this.moveVertical(-this.transform.up);
-            }
-
         }
 
         if (this.currentRail && !PauseMenuController.IsGamePause) {
@@ -57,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
             this.adjustVelocity();
         }
         this.acceleration = Vector3.zero;
+    }
+
+    public Vector3 getCurrentRailUp() {
+        return this.currentRail.transform.up;
     }
 
     void adjustVelocity() {
@@ -70,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         this.acceleration += force;
     }
 
-    void moveVertical(Vector3 direction) {
+    public void moveVertical(Vector3 direction) {
         Transform rail = this.findVerticalRail(direction); // WARNING: Currently, this is not guaranteed to be a Rail
         if (rail) {
             Rail railScript = rail.GetComponent<Rail>();

@@ -3233,6 +3233,7 @@ GameObject:
   - component: {fileID: 1742154880}
   - component: {fileID: 1742154884}
   - component: {fileID: 1742154885}
+  - component: {fileID: 1742154886}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3362,6 +3363,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   railContainer: {fileID: 1864888680}
+--- !u!114 &1742154886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742154879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee88880cf1278f345a27fd7c3bcf1040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1769194932
 GameObject:
   m_ObjectHideFlags: 0
