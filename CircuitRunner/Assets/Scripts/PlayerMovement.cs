@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         if (this.currentRail && !PauseMenuController.IsGamePause) {
             this.transform.rotation = this.currentRail.rotation;
             this.transform.Rotate(0,0,90f);
-            Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition();
+            Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
             Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
             Vector3 forwardForce = this.currentRail.transform.up * 0.01f;
             
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         Transform rail = this.findVerticalRail(direction); // WARNING: Currently, this is not guaranteed to be a Rail
         if (rail) {
             Rail railScript = rail.GetComponent<Rail>();
-            Vector3 newPos = railScript.getClosestPosition();
+            Vector3 newPos = railScript.getClosestPosition(this.transform);
             this.transform.position = newPos;
             this.currentRail = rail;
         }
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     Transform findVerticalRail(Vector3 direction) {
         Transform rail = null;
         RaycastHit hitInfo;
-        Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition() : this.transform.position;
+        Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform) : this.transform.position;
 
         // TODO: MAKE SURE THE RAY CAN ONLY COLLIDE WITH RAILS (NOT PLAYER, ENEMIES, ITEMS, ETC)
         // Currently, this is accomplished by turning off player and current rail's collider isTrigger temporarily.
@@ -116,9 +116,9 @@ public class PlayerMovement : MonoBehaviour
     void adjustPosition() {
         // If player is beyond current rail...
         Rail railScript = this.currentRail.GetComponent<Rail>();
-        float horizontalDistance = railScript.getPlayerHorizontalDistance();
+        float horizontalDistance = railScript.getPlayerHorizontalDistance(this.transform);
         if (horizontalDistance > 0f) {
-            bool isClosestToFront = railScript.isClosestToFront();
+            bool isClosestToFront = railScript.isClosestToFront(this.transform);
             if (isClosestToFront) {
                 Transform nextRail = railScript.getNextRail();
                 if (nextRail) {
@@ -153,10 +153,10 @@ public class PlayerMovement : MonoBehaviour
 
         // If moving beyond current rail...
         Rail railScript = this.currentRail.GetComponent<Rail>();
-        float horizontalDistance = railScript.getPlayerHorizontalDistance();
+        float horizontalDistance = railScript.getPlayerHorizontalDistance(this.transform);
         if (horizontalDistance > 0f) {
             Debug.Log("if");
-            bool isClosestToFront = railScript.isClosestToFront();
+            bool isClosestToFront = railScript.isClosestToFront(this.transform);
             Transform nextRail = railScript.getNextRail();
             Transform prevRail = railScript.getPrevRail();
             if (isClosestToFront && nextRail != null) {
@@ -184,18 +184,18 @@ public class PlayerMovement : MonoBehaviour
         Transform closest = null;
         float smallestDistance = Mathf.Infinity;
         foreach(Transform rail in railContainer.transform) {
-            float distance = rail.GetComponent<Rail>().getPlayerDistance();
+            float distance = rail.GetComponent<Rail>().getPlayerDistance(this.transform);
             if (distance < smallestDistance) {
                 smallestDistance = distance;
                 closest = rail;
             }
         }
+        closest.GetComponent<Rail>().turnOnPower();
         return closest;
     }
 
     public void flipVelocity() {
-        float dampening = 2f;
-        this.velocity = -1.1f * this.velocity;// / dampening;
+        this.velocity = -1.1f * this.velocity;
     }
 
     public Vector3 getVelocity() {

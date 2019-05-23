@@ -7,10 +7,10 @@ public class Rail : MonoBehaviour
     private Transform frontTransform;
     private Transform backTransform;
     private Transform closestTransform;
-    public GameObject playerGO;
     public GameObject prevRail;
     public GameObject nextRail;
     public RailsController Rails;
+    public GameObject playerGO;
     
 
     private float length;
@@ -39,67 +39,54 @@ public class Rail : MonoBehaviour
     void Update()
     {
         this.length = (frontTransform.position - backTransform.position).magnitude;
-
-        //playerVector = playerGO.transform.position - this.transform.position;
-        //playerHorizontal = Vector3.Project(playerVector, this.transform.up);
-        //playerVertical = playerVector - playerHorizontal;
-
-        //playerVerticalDistance = playerVertical.magnitude;
-        //playerHorizontalDistance = this.getPlayerHorizontalDistance();
-        
-
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerVector, Color.white);
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerHorizontal, Color.red);
-        //Debug.DrawLine(this.transform.position, this.transform.position+playerVertical, Color.green);
+        timer -= Time.deltaTime;
+        if (timer < 0f) timer = 0f;
     }
 
     /// LateUpdate is called every frame, if the Behaviour is enabled.
     /// It is called after all Update functions have been called.
     void LateUpdate()
     {
-
-        this.closestTransform.position = this.getClosestPosition();
-        if (timer > 0)
-        {
+        this.closestTransform.position = this.getClosestPosition(playerGO.transform);
+        if (timer > 0f) {
             this.GetComponent<MeshRenderer>().material = Rails.GetPowered();
-            timer-= Time.deltaTime;
-        }
-        else {
+        } else {
             this.GetComponent<MeshRenderer>().material = Rails.GetUnpowered();
         }
     }
 
-    public float getPlayerHorizontalDistance() {
-        Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
+    public float getPlayerHorizontalDistance(Transform target) {
+        Vector3 toPlayer = target.position - this.transform.position;
         Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
         float distance = horizontal.magnitude - this.length/2;
         if (distance < 0f) return 0f;
         return distance;
     }
-    public float getPlayerVerticalDistance()
+    public float getPlayerVerticalDistance(Transform target)
     {
-        Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
+        Vector3 toPlayer = target.position - this.transform.position;
         Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
         Vector3 vertical = toPlayer - horizontal;
         return vertical.magnitude;
     }
 
-    public Vector3 getClosestPosition() {
-        if (this.getPlayerHorizontalDistance() > 0f) {
-            float startDistance = (this.frontTransform.position - this.playerGO.transform.position).magnitude;
-            float endDistance = (this.backTransform.position - this.playerGO.transform.position).magnitude;
+    public Vector3 getClosestPosition(Transform target) {
+        if (this.getPlayerHorizontalDistance(target) > 0f) {
+            float startDistance = (this.frontTransform.position - target.position).magnitude;
+            float endDistance = (this.backTransform.position - target.position).magnitude;
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
-            if (this.getPlayerVerticalDistance() >= -0.01f&& this.getPlayerVerticalDistance() <0.1f) timer = 3f;
-            Vector3 toPlayer = this.playerGO.transform.position - this.transform.position;
+            float vDistance = this.getPlayerVerticalDistance(target);
+            if (vDistance >= -0.01f && vDistance <0.1f) timer = 3f;
+            Vector3 toPlayer = target.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;
-            return this.playerGO.transform.position - vertical;
+            return target.position - vertical;
         }
     }
 
-    public float getPlayerDistance() {
-        return (this.playerGO.transform.position - this.getClosestPosition()).magnitude;
+    public float getPlayerDistance(Transform target) {
+        return (target.position - this.getClosestPosition(target)).magnitude;
     }
 
     public Vector3 getFrontPosition() {
@@ -110,9 +97,9 @@ public class Rail : MonoBehaviour
         return this.backTransform.position;
     }
 
-    public bool isClosestToFront() {
-        float frontDistance = (this.playerGO.transform.position - this.frontTransform.position).magnitude;
-        float backDistance = (this.playerGO.transform.position - this.backTransform.position).magnitude;
+    public bool isClosestToFront(Transform target) {
+        float frontDistance = (target.position - this.frontTransform.position).magnitude;
+        float backDistance = (target.position - this.backTransform.position).magnitude;
         return (frontDistance < backDistance);
     }
 
@@ -136,5 +123,13 @@ public class Rail : MonoBehaviour
 
     public bool getIsPowered() {
         return (timer > 0f);
+    }
+
+    public void turnOnPower() {
+        this.timer = 3f;
+    }
+
+    public void turnOffPower() {
+        // ????
     }
 }

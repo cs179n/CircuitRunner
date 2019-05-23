@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private bool isDead = false;
     private GameObject hitter;
+    private Transform currentRail = null;
     // Start is called before the first frame update
     void Start()
     {
