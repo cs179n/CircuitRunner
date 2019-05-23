@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (this.isDead) {
             Vector3 currentPos = this.transform.position;
             Vector3 targetPos = this.transform.position + new Vector3(2f, 2f, 0f);
