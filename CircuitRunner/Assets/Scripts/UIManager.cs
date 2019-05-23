@@ -7,7 +7,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     // HUD timer, shield, and lightning text reference
-    public Text timerText, shieldUIText, lightningUIText, gameOverText, restartTimerText;
+    public Text timerText, shieldUIText, lightningUIText, gameOverText, restartTimerText, gameWinnerText;
 
     private float startTime, timePassed, timeLeft;
 
@@ -89,11 +89,44 @@ public class UIManager : MonoBehaviour
             }
 
         }
+        else if(Player.IsWinner)
+        {
+            Vector4 temp;
+
+            temp = new Vector4(faderScreen.color.r, faderScreen.color.g, faderScreen.color.b, 1.0f);
+            faderScreen.color = temp;
+            temp = new Vector4(gameWinnerText.color.r, gameWinnerText.color.g, gameWinnerText.color.b, 1.0f);
+            gameWinnerText.color = temp;
+
+            // .. increment a timer to count up to restarting.
+            restartTimer += Time.deltaTime;
+
+            // restart timer text
+            temp = new Vector4(restartTimerText.color.r, restartTimerText.color.g, restartTimerText.color.b, 1.0f);
+            restartTimerText.color = temp;
+
+            if (restartTimer <= restartDelay)
+            {
+                restartTimerText.text = "Restarting in \n" + (restartDelay - restartTimer).ToString("f0");
+            }
+
+            // .. if it reaches the restart delay...
+            if (restartTimer >= restartDelay)
+            {
+                Debug.Log("Restart Level");
+                // .. then reload the currently loaded level.
+                resetLevel1();
+
+                // display restart countdown 
+                SceneManager.LoadScene(scene.name);
+            }
+        }
     }
 
     void resetLevel1()
     {
         Player.IsDead = false;
+        Player.IsWinner = false;
         Player.NumOfLives = startLivesAmt;
         Player.NumOfShields = startShieldsAmt;
         startTime = kMaxTimeSecsLevel1;
