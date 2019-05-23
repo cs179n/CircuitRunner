@@ -192,4 +192,9 @@ public class PlayerMovement : MonoBehaviour
         }
         return closest;
     }
+
+    public void flipVelocity() {
+        float dampening = 2f;
+        this.velocity = -1.1f * this.velocity;// / dampening;
+    }
 }

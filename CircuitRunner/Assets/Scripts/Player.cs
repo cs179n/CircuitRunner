@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
             } else {
                 isGameOver = true;
             }
+            this.GetComponent<PlayerMovement>().flipVelocity();
         }
         if (other.gameObject.CompareTag("Win"))
         {

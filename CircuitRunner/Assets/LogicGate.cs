@@ -12,19 +12,16 @@ public class LogicGate : MonoBehaviour
         AlwaysOpen
     }
     public GateType gateType = GateType.And;
-    Transform topRight;
-    Transform topLeft;
-    Transform bottomRight;
-    Transform bottomLeft;
+    Transform wall;
 
     // Start is called before the first frame update
     void Start()
     {
         // Child objects
-        topRight = this.transform.GetChild(0);
-        topLeft = this.transform.GetChild(1);
-        bottomRight = this.transform.GetChild(2);
-        bottomLeft = this.transform.GetChild(3);
+        wall = this.transform.GetChild(0);
+        // topLeft = this.transform.GetChild(1);
+        // bottomRight = this.transform.GetChild(2);
+        // bottomLeft = this.transform.GetChild(3);
     }
 
     // Update is called once per frame
