@@ -20,7 +20,9 @@ public class Player : MonoBehaviour
     public static int NumOfShields { get => numOfShields; set => numOfShields = value; }
     //######################################################################################
     private static bool isGameOver;
+    private static bool isWon;
     public static bool IsDead { get => isGameOver; set => isGameOver = value; }
+    public static bool IsWinner { get => isWon; set => isWon = value; }
     //######################################################################################
 
     void start() 
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Win"))
         {
-            playerLives = 69;
+            isWon = true;
         }
         if (other.gameObject.CompareTag("Mite"))
         {
