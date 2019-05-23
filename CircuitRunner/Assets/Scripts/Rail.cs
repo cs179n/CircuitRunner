@@ -133,4 +133,8 @@ public class Rail : MonoBehaviour
         this.GetComponent<CapsuleCollider>().isTrigger = value;
         return oldValue;
     }
+
+    public bool getIsPowered() {
+        return (timer > 0f);
+    }
 }
