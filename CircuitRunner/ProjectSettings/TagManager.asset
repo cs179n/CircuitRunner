@@ -8,6 +8,7 @@ TagManager:
   - Battery Pick Up
   - Brick Wall
   - Win
+  - Mite
   layers:
   - Default
   - TransparentFX

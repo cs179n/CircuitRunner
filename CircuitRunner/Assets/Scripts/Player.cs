@@ -53,11 +53,7 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.CompareTag("Brick Wall"))
         {
-            if (playerLives > 1) {
-                playerLives--;
-            } else {
-                isGameOver = true;
-            }
+            this.loseLife();
             this.GetComponent<PlayerMovement>().flipVelocity();
         }
         if (other.gameObject.CompareTag("Win"))
@@ -66,14 +62,21 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Mite"))
         {
-            if (playerLives > 1)
-            {
-                playerLives--;
-            }
-            else
-            {
-                isGameOver = true;
-            }
+            this.loseLife();
+            Vector3 velocity = this.GetComponent<PlayerMovement>().getVelocity();
+            other.gameObject.GetComponent<Enemy>().punched(velocity);
+            
+            //Vector3 target = other.transform.position + velocity;
+            //float step = 1f * Time.deltaTime;
+            //other.transform.position = Vector3.MoveTowards(other.transform.position, target, step);
+        }
+    }
+
+    void loseLife() {
+        if (playerLives > 1) {
+            playerLives--;
+        } else {
+            isGameOver = true;
         }
     }
 }

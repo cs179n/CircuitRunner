@@ -197,4 +197,8 @@ public class PlayerMovement : MonoBehaviour
         float dampening = 2f;
         this.velocity = -1.1f * this.velocity;// / dampening;
     }
+
+    public Vector3 getVelocity() {
+        return this.velocity;
+    }
 }
