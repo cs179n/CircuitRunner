@@ -64,5 +64,16 @@ public class Player : MonoBehaviour
         {
             playerLives = 69;
         }
+        if (other.gameObject.CompareTag("Mite"))
+        {
+            if (playerLives > 1)
+            {
+                playerLives--;
+            }
+            else
+            {
+                isGameOver = true;
+            }
+        }
     }
 }
