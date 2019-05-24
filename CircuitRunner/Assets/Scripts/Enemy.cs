@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private bool isDead = false;
-    private Transform currentRail = null;
     public Transform target;
     // Start is called before the first frame update
     void Start()
@@ -24,10 +23,9 @@ public class Enemy : MonoBehaviour
             this.transform.position = Vector3.MoveTowards(currentPos,targetPos,stepPos);
         } else {
             // move enemy
-            Debug.Log("not dead");
             Vector3 toTarget = (target.position - this.transform.position);
             Vector3 force = toTarget.normalized * 0.001f;
-            this.GetComponent<PlayerMovement>().addForce(force);
+            this.GetComponent<Movement>().addForce(force);
         }
     }
 

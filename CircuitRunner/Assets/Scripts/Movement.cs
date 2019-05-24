@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     // Start is called before the first frame update
     private Transform currentRail = null;
@@ -12,10 +12,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 offset = new Vector3(-5, 0, 0);
     void Start()
     {
-        this.currentRail = this.findClosestRail();
-        if (this.currentRail) {
-            this.transform.position = this.currentRail.position+offset;
-            
+        Transform rail = this.findClosestRail();
+        if (rail) {
+            this.currentRail = rail;
+            Vector3 backPosition = rail.GetComponent<Rail>().getBackPosition();
+            this.transform.position = backPosition;
         }
     }
 

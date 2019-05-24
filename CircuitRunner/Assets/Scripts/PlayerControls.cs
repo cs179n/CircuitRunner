@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    PlayerMovement movementScript;
+    Movement movementScript;
     // Start is called before the first frame update
     void Start()
     {
-        movementScript = this.transform.GetComponent<PlayerMovement>();
+        movementScript = this.transform.GetComponent<Movement>();
     }
 
     // Update is called once per frame

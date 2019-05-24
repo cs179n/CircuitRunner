@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Brick Wall"))
         {
             this.loseLife();
-            this.GetComponent<PlayerMovement>().flipVelocity();
+            this.GetComponent<Movement>().flipVelocity();
         }
         if (other.gameObject.CompareTag("Win"))
         {
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Mite"))
         {
             this.loseLife();
-            Vector3 velocity = this.GetComponent<PlayerMovement>().getVelocity();
+            Vector3 velocity = this.GetComponent<Movement>().getVelocity();
             other.gameObject.GetComponent<Enemy>().punched(velocity);
             
             //Vector3 target = other.transform.position + velocity;
