@@ -9,12 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 acceleration = Vector3.zero;
     public GameObject railContainer;
-
+    private Vector3 offset = new Vector3(-5, 0, 0);
     void Start()
     {
         this.currentRail = this.findClosestRail();
         if (this.currentRail) {
-            this.transform.position = this.currentRail.position;
+            this.transform.position = this.currentRail.position+offset;
             
         }
     }
