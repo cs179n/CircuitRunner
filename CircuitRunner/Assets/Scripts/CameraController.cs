@@ -23,5 +23,10 @@ public class CameraController : MonoBehaviour
         float y = targetGO.transform.position.y;
         float z = this.transform.position.z;
         this.transform.position = new Vector3(x,y,z);
+
+        float angle = Quaternion.Angle(this.transform.rotation, targetGO.transform.rotation);
+
+        float step = 10f * angle * Time.deltaTime;
+        this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetGO.transform.rotation, step);
     }
 }
