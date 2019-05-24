@@ -35,6 +35,57 @@ public class LogicGate : MonoBehaviour
         // topLeft = this.transform.GetChild(1);
         // bottomRight = this.transform.GetChild(2);
         // bottomLeft = this.transform.GetChild(3);
+
+        GameObject textGO = new GameObject();
+        textGO.transform.parent = this.transform;
+        textGO.transform.localPosition = new Vector3(0,0,0);
+        textGO.transform.localRotation = Quaternion.identity;
+        TextMesh text = textGO.AddComponent<TextMesh>();
+        text.text = this.getGateName();
+        text.fontSize = 10;
+    }
+
+    string getGateName() {
+        string name = "";
+        switch(this.gateType) {
+            case GateType.And:
+                name += "AND";
+                break;
+             case GateType.Or:
+                name += "OR";
+                break;
+            case GateType.Not:
+                name += "NOT";
+                break;
+            case GateType.Xor:
+                name += "XOR";
+                break;
+            case GateType.Nand:
+                name += "NAND";
+                break;
+            case GateType.Nor:
+                name += "NOR";
+                break;
+            case GateType.Xnor:
+                name += "XNOR";
+                break;
+            case GateType.Odd:
+                name += "ODD";
+                break;
+            case GateType.Even:
+                name += "EVEN";
+                break;
+            case GateType.AlwaysOpen:
+                name += "OPEN";
+                break;
+            case GateType.AlwaysClosed:
+                name += "CLOSED";
+                break;
+            default:
+                name += ">>DEFAULT<<";
+                break;
+        }
+        return name;
     }
 
     // Update is called once per frame
