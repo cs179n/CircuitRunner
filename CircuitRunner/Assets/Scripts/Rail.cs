@@ -126,6 +126,7 @@ public class Rail : MonoBehaviour
     }
 
     public void turnOnPower() {
+        Debug.Log("on");
         this.timer = 1.5f;
     }
 

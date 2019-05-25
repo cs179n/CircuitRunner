@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         {
             this.loseLife();
             Vector3 velocity = this.GetComponent<Movement>().getVelocity();
-            other.gameObject.GetComponent<Enemy>().punched(velocity);
+            other.gameObject.GetComponent<Enemy>().knockOut(velocity);
             
             //Vector3 target = other.transform.position + velocity;
             //float step = 1f * Time.deltaTime;

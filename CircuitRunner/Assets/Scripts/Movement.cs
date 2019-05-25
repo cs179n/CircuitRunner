@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public bool debugger = false;
     // Start is called before the first frame update
     private Transform currentRail = null;
     private Vector3 velocity = Vector3.zero;
     private Vector3 acceleration = Vector3.zero;
     public GameObject railContainer;
-    private Vector3 offset = new Vector3(-5, 0, 0);
     void Start()
     {
         Transform rail = this.findClosestRail();
@@ -20,7 +20,6 @@ public class Movement : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Place the player on the closest rail
@@ -33,9 +32,10 @@ public class Movement : MonoBehaviour
         }
 
         if (this.currentRail && !PauseMenuController.IsGamePause) {
+            
             this.velocity += this.acceleration;
             this.transform.position += this.velocity;
-            this.adjustPosition();
+            this.adjustHorizontalPosition();
             this.adjustVelocity();
         }
         this.acceleration = Vector3.zero;
@@ -52,7 +52,10 @@ public class Movement : MonoBehaviour
         this.velocity = this.currentRail.transform.up * speed * direction;
     }
 
-    public void addForce(Vector3 force) {
+    public void addForce(Vector3 force, bool stayOnRail=false) {
+        if (stayOnRail && this.currentRail) {
+            force = Vector3.Project(force, this.currentRail.transform.up);
+        }
         this.acceleration += force;
     }
 
@@ -70,16 +73,13 @@ public class Movement : MonoBehaviour
         Transform rail = null;
         RaycastHit hitInfo;
         Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform) : this.transform.position;
-
-        // TODO: MAKE SURE THE RAY CAN ONLY COLLIDE WITH RAILS (NOT PLAYER, ENEMIES, ITEMS, ETC)
-        // Currently, this is accomplished by turning off player and current rail's collider isTrigger temporarily.
-        // An improvement would be to add a layerMask for rails only. (While still turning off current rail.)
-
+        int layerMask = 1 << 9; // Rail is layer 9
         bool railTrigger = this.currentRail.GetComponent<Rail>().setColliderTrigger(false);
         bool playerTrigger = this.setColliderTrigger(false);
-        if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity)) {
+         if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity, layerMask)) {
+            Debug.Log("rail");
             rail = hitInfo.collider.transform;
-            Debug.DrawRay(this.transform.position, direction, Color.green, 20f);
+            Debug.DrawRay(this.transform.position, direction*(this.transform.position-hitInfo.collider.transform.position).magnitude, Color.green, 10f);
         }
         this.currentRail.GetComponent<Rail>().setColliderTrigger(railTrigger);
         this.setColliderTrigger(playerTrigger);
@@ -98,7 +98,7 @@ public class Movement : MonoBehaviour
     //     this.velocity = this.currentRail.transform.up * speed;
     // }
 
-    void adjustPosition() {
+    void adjustHorizontalPosition() {
         // If player is beyond current rail...
         Rail railScript = this.currentRail.GetComponent<Rail>();
         float horizontalDistance = railScript.getPlayerHorizontalDistance(this.transform);
@@ -132,6 +132,10 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void changeCurrentRail() {
+        
+    }
+
     void moveHorizontal_OLD(Vector3 direction) {
         //this.transform.position += direction*0.7f;//*0.1f;
         
@@ -161,9 +165,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void changeCurrentRail() {
-        
-    }
+    
 
     Transform findClosestRail() {
         Transform closest = null;
@@ -175,7 +177,7 @@ public class Movement : MonoBehaviour
                 closest = rail;
             }
         }
-        closest.GetComponent<Rail>().turnOnPower();
+//        closest.GetComponent<Rail>().turnOnPower();
         return closest;
     }
 

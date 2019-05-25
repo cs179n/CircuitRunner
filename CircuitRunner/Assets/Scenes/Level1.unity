@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 46742536}
   - component: {fileID: 46742535}
   - component: {fileID: 46742534}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 57242771}
   - component: {fileID: 57242770}
   - component: {fileID: 57242769}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Middle 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 110884574}
   - component: {fileID: 110884573}
   - component: {fileID: 110884572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Mid 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1005,7 +1005,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 1.3719836e+20, z: 7.95e-43, w: 1.3719836e+20}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 229064259}
   - component: {fileID: 229064258}
   - component: {fileID: 229064257}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1148,7 +1148,7 @@ GameObject:
   - component: {fileID: 249417869}
   - component: {fileID: 249417868}
   - component: {fileID: 249417867}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,7 +1924,7 @@ GameObject:
   - component: {fileID: 434477025}
   - component: {fileID: 434477024}
   - component: {fileID: 434477023}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2907,7 +2907,7 @@ GameObject:
   - component: {fileID: 767509386}
   - component: {fileID: 767509385}
   - component: {fileID: 767509384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3587,7 +3587,7 @@ GameObject:
   - component: {fileID: 1051168874}
   - component: {fileID: 1051168873}
   - component: {fileID: 1051168872}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5090,7 +5090,7 @@ GameObject:
   - component: {fileID: 1469560468}
   - component: {fileID: 1469560467}
   - component: {fileID: 1469560466}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Mid 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5409,7 +5409,7 @@ GameObject:
   - component: {fileID: 1542683757}
   - component: {fileID: 1542683756}
   - component: {fileID: 1542683755}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5749,7 +5749,7 @@ GameObject:
   - component: {fileID: 1564782255}
   - component: {fileID: 1564782254}
   - component: {fileID: 1564782253}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Mid 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5861,7 +5861,7 @@ GameObject:
   - component: {fileID: 1576704135}
   - component: {fileID: 1576704134}
   - component: {fileID: 1576704133}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8402,7 +8402,7 @@ GameObject:
   - component: {fileID: 1896054569}
   - component: {fileID: 1896054568}
   - component: {fileID: 1896054567}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Top 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8514,7 +8514,7 @@ GameObject:
   - component: {fileID: 1955877845}
   - component: {fileID: 1955877844}
   - component: {fileID: 1955877843}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail Bot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8701,7 +8701,7 @@ GameObject:
   - component: {fileID: 2006534591}
   - component: {fileID: 2006534590}
   - component: {fileID: 2006534594}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -25,11 +25,11 @@ public class Enemy : MonoBehaviour
             // move enemy
             Vector3 toTarget = (target.position - this.transform.position);
             Vector3 force = toTarget.normalized * 0.001f;
-            this.GetComponent<Movement>().addForce(force);
+            this.GetComponent<Movement>().addForce(force, true);
         }
     }
 
-    public void punched(Vector3 force) {
+    public void knockOut(Vector3 force) {
         Debug.Log("punched");
         this.isDead = true;
     }
