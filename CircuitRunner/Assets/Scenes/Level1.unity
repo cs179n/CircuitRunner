@@ -549,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ff36ef22e73db42b7b377eceb12c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugger: 0
   railContainer: {fileID: 1864888680}
 --- !u!114 &95193986
 MonoBehaviour:
@@ -2831,6 +2832,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brick Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599675046565081274, guid: 6c29ace32006f39478fa3adb4d57343c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1599675046565081286, guid: 6c29ace32006f39478fa3adb4d57343c,
         type: 3}
@@ -6973,6 +6979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ff36ef22e73db42b7b377eceb12c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugger: 0
   railContainer: {fileID: 1864888680}
 --- !u!1 &1742154879
 GameObject:
@@ -7021,7 +7028,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742154879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.61, y: -3.57, z: 0}
+  m_LocalPosition: {x: -4.67, y: -2.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1883442570}
@@ -7117,6 +7124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ff36ef22e73db42b7b377eceb12c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugger: 1
   railContainer: {fileID: 1864888680}
 --- !u!114 &1742154886
 MonoBehaviour:
@@ -7238,6 +7246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ff36ef22e73db42b7b377eceb12c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugger: 0
   railContainer: {fileID: 1864888680}
 --- !u!114 &1766946786
 MonoBehaviour:
@@ -8797,7 +8806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prevRail: {fileID: 0}
-  nextRail: {fileID: 57242767}
+  nextRail: {fileID: 0}
   Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!1 &2013245517

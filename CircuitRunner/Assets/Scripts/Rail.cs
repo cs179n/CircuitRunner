@@ -133,4 +133,12 @@ public class Rail : MonoBehaviour
     public void turnOffPower() {
         // ????
     }
+
+    public void setNextRail(Transform rail) {
+        this.nextRail = rail.gameObject;
+    }
+
+    public void setPrevRail(Transform rail) {
+        this.prevRail = rail.gameObject;
+    }
 }
