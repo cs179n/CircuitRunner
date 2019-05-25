@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        this.railContainer = GameObject.FindGameObjectWithTag("RailContainer");
         Transform rail = this.findClosestRail();
         if (rail) {
             this.currentRail = rail;
