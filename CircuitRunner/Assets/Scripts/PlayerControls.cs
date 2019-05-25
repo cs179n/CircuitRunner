@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     Movement movementScript;
+    public GameObject chargePrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,15 @@ public class PlayerControls : MonoBehaviour
             movementScript.moveVertical(this.transform.up);
         } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
             movementScript.moveVertical(-this.transform.up);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            GameObject charge1GO = Instantiate(chargePrefab, this.transform.position, Quaternion.identity);
+            GameObject charge2GO = Instantiate(chargePrefab, this.transform.position, Quaternion.identity);
+            charge1GO.transform.parent = GameObject.FindGameObjectWithTag("ChargeContainer").transform;
+            charge2GO.transform.parent = GameObject.FindGameObjectWithTag("ChargeContainer").transform;
+            charge1GO.GetComponent<Charge>().reachEnd(5f, true);
+            charge2GO.GetComponent<Charge>().reachEnd(1f, false);
         }
     }
 }

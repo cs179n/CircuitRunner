@@ -6,20 +6,16 @@ public class Movement : MonoBehaviour
 {
     public bool debugger = false;
     // Start is called before the first frame update
-    private Transform currentRail = null;
-    private Vector3 velocity = Vector3.zero;
-    private Vector3 acceleration = Vector3.zero;
-    public GameObject railContainer;
-    private Vector3 prevPosition;
+    Transform currentRail = null;
+    Vector3 velocity = Vector3.zero;
+    Vector3 acceleration = Vector3.zero;
+    Vector3 prevPosition;
+    
+
 
     void Start()
     {
-        Transform rail = this.findClosestRail();
-        if (rail) {
-            this.currentRail = rail;
-            Vector3 backPosition = rail.GetComponent<Rail>().getBackPosition();
-            this.transform.position = backPosition;
-        }
+        this.currentRail = this.findClosestRail();
         this.prevPosition = this.transform.position;
     }
 
@@ -174,6 +170,7 @@ public class Movement : MonoBehaviour
     Transform findClosestRail() {
         Transform closest = null;
         float smallestDistance = Mathf.Infinity;
+        GameObject railContainer = GameObject.FindGameObjectWithTag("RailContainer");
         foreach(Transform rail in railContainer.transform) {
             float distance = rail.GetComponent<Rail>().getPlayerDistance(this.transform);
             if (distance < smallestDistance) {
@@ -191,5 +188,10 @@ public class Movement : MonoBehaviour
 
     public Vector3 getVelocity() {
         return this.velocity;
+    }
+
+    public void stopMovement() {
+        this.acceleration = Vector3.zero;
+        this.velocity = Vector3.zero;
     }
 }
