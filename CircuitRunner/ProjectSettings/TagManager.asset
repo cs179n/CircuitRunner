@@ -9,6 +9,7 @@ TagManager:
   - Brick Wall
   - Win
   - Mite
+  - RailContainer
   layers:
   - Default
   - TransparentFX

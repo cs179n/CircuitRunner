@@ -9,12 +9,12 @@ public class Rail : MonoBehaviour
     private Transform closestTransform;
     public GameObject prevRail;
     public GameObject nextRail;
-    public RailsController Rails;
+    RailsController railControllerScript;
     public GameObject playerGO;
     
 
     private float length;
-    private float timer;
+    private float poweredTimer;
 
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -23,6 +23,8 @@ public class Rail : MonoBehaviour
         this.frontTransform = this.transform.GetChild(0);
         this.backTransform = this.transform.GetChild(1);
         this.closestTransform = this.transform.GetChild(2);
+
+        
     }
 
     // Start is called before the first frame update
@@ -33,26 +35,23 @@ public class Rail : MonoBehaviour
         this.backTransform.position -= this.transform.up * this.transform.localScale.y;
 
         this.length = (frontTransform.position - backTransform.position).magnitude;
+        this.railControllerScript = this.transform.parent.GetComponent<RailsController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         this.length = (frontTransform.position - backTransform.position).magnitude;
-        timer -= Time.deltaTime;
-        if (timer < 0f) timer = 0f;
+
+        poweredTimer -= Time.deltaTime;
+        if (poweredTimer < 0f) poweredTimer = 0f;
     }
 
     /// LateUpdate is called every frame, if the Behaviour is enabled.
     /// It is called after all Update functions have been called.
     void LateUpdate()
     {
-        this.closestTransform.position = this.getClosestPosition(playerGO.transform);
-        if (timer > 0f) {
-            this.GetComponent<MeshRenderer>().material = Rails.GetPowered();
-        } else {
-            this.GetComponent<MeshRenderer>().material = Rails.GetUnpowered();
-        }
+        this.GetComponent<MeshRenderer>().material = (this.poweredTimer > 0f) ? railControllerScript.GetPowered() : railControllerScript.GetUnpowered();
     }
 
     public float getPlayerHorizontalDistance(Transform target) {
@@ -77,7 +76,7 @@ public class Rail : MonoBehaviour
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
             float vDistance = this.getPlayerVerticalDistance(target);
-            if (vDistance >= -0.01f && vDistance < 0.1f) timer = 1.5f;
+            if (vDistance >= -0.01f && vDistance < 0.1f) poweredTimer = 1.5f;
             Vector3 toPlayer = target.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;
@@ -122,12 +121,12 @@ public class Rail : MonoBehaviour
     }
 
     public bool getIsPowered() {
-        return (timer > 0f);
+        return (poweredTimer > 0f);
     }
 
     public void turnOnPower() {
         Debug.Log("on");
-        this.timer = 1.5f;
+        this.poweredTimer = 1.5f;
     }
 
     public void turnOffPower() {

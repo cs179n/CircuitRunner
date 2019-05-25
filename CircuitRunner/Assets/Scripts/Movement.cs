@@ -83,7 +83,8 @@ public class Movement : MonoBehaviour
     }
 
     public Vector3 getCurrentRailUp() {
-        return this.currentRail.transform.up;
+        
+        return (this.currentRail) ? this.currentRail.transform.up : Vector3.zero;
     }
 
     void adjustVelocity() {
@@ -119,14 +120,14 @@ public class Movement : MonoBehaviour
         RaycastHit hitInfo;
         Vector3 origin = (this.currentRail) ? this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform) : this.transform.position;
         int layerMask = 1 << 9; // Rail is layer 9
-        bool railTrigger = this.currentRail.GetComponent<Rail>().setColliderTrigger(false);
+        bool railTrigger = (this.currentRail) ? this.currentRail.GetComponent<Rail>().setColliderTrigger(false) : false;
         bool playerTrigger = this.setColliderTrigger(false);
          if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity, layerMask)) {
             Debug.Log("rail");
             rail = hitInfo.collider.transform;
             Debug.DrawRay(this.transform.position, direction*(this.transform.position-hitInfo.collider.transform.position).magnitude, Color.green, 10f);
         }
-        this.currentRail.GetComponent<Rail>().setColliderTrigger(railTrigger);
+        if (this.currentRail) this.currentRail.GetComponent<Rail>().setColliderTrigger(railTrigger);
         this.setColliderTrigger(playerTrigger);
         return rail;
     }
