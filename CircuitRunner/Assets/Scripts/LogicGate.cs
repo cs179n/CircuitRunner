@@ -10,19 +10,19 @@ public class LogicGate : MonoBehaviour
     Vector3 setposition;
     Vector3 offposition;
     public enum GateType {
-        And,
-        Or,
-        Not,
-        Xor,
-        Nand,
-        Nor,
-        Xnor,
-        Odd,
-        Even,
-        AlwaysClosed,
-        AlwaysOpen
+        AND,
+        OR,
+        NOT,
+        XOR,
+        NAND,
+        NOR,
+        XNOR,
+        ODD,
+        EVEN,
+        CLOSED,
+        OPEN
     }
-    public GateType gateType = GateType.And;
+    public GateType gateType = GateType.AND;
     Transform wall;
 
     // Start is called before the first frame update
@@ -30,11 +30,7 @@ public class LogicGate : MonoBehaviour
     {
         setposition = this.transform.position;
         offposition = this.transform.position + offset;
-        // Child objects
         wall = this.transform.GetChild(0);
-        // topLeft = this.transform.GetChild(1);
-        // bottomRight = this.transform.GetChild(2);
-        // bottomLeft = this.transform.GetChild(3);
 
         GameObject textGO = new GameObject();
         textGO.transform.parent = this.transform;
@@ -48,41 +44,41 @@ public class LogicGate : MonoBehaviour
     string getGateName() {
         string name = "";
         switch(this.gateType) {
-            case GateType.And:
+            case GateType.AND:
                 name += "AND";
                 break;
-             case GateType.Or:
+             case GateType.OR:
                 name += "OR";
                 break;
-            case GateType.Not:
+            case GateType.NOT:
                 name += "NOT";
                 break;
-            case GateType.Xor:
+            case GateType.XOR:
                 name += "XOR";
                 break;
-            case GateType.Nand:
+            case GateType.NAND:
                 name += "NAND";
                 break;
-            case GateType.Nor:
+            case GateType.NOR:
                 name += "NOR";
                 break;
-            case GateType.Xnor:
+            case GateType.XNOR:
                 name += "XNOR";
                 break;
-            case GateType.Odd:
+            case GateType.ODD:
                 name += "ODD";
                 break;
-            case GateType.Even:
+            case GateType.EVEN:
                 name += "EVEN";
                 break;
-            case GateType.AlwaysOpen:
+            case GateType.OPEN:
                 name += "OPEN";
                 break;
-            case GateType.AlwaysClosed:
+            case GateType.CLOSED:
                 name += "CLOSED";
                 break;
             default:
-                name += ">>DEFAULT<<";
+                name += "--default--";
                 break;
         }
         return name;
@@ -99,34 +95,34 @@ public class LogicGate : MonoBehaviour
         }
         int total = this.railInputs.Length;
         switch(this.gateType) {
-            case GateType.And:
+            case GateType.AND:
                 this.isPowered = (count == total);
                 break;
-            case GateType.Or:
+            case GateType.OR:
                 this.isPowered = (count >= 1);
                 break;
-            case GateType.Not:
+            case GateType.NOT:
                 this.isPowered = (count == 0);
                 break;
-            case GateType.Xor:
-                this.isPowered = (count == 1);
-                break;
-            case GateType.Nand:
-                this.isPowered = (count < total);
-                break;
-            case GateType.Nor:
-                this.isPowered = (count == 0);
-                break;
-            case GateType.Xnor:
-                this.isPowered = (count == 0 || count == total);
-                break;
-            case GateType.Odd:
+            case GateType.XOR:
                 this.isPowered = (count % 2 != 0);
                 break;
-            case GateType.Even:
+            case GateType.NAND:
+                this.isPowered = (count < total);
+                break;
+            case GateType.NOR:
+                this.isPowered = (count == 0);
+                break;
+            case GateType.XNOR:
+                this.isPowered = (count == 0 || count == total);
+                break;
+            case GateType.ODD:
+                this.isPowered = (count % 2 != 0);
+                break;
+            case GateType.EVEN:
                 this.isPowered = (count % 2 == 0);
                 break;
-            case GateType.AlwaysOpen:
+            case GateType.OPEN:
                 this.isPowered = true;
                 break;
             default:

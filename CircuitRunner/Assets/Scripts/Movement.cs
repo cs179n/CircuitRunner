@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private Vector3 acceleration = Vector3.zero;
     public GameObject railContainer;
+    private Vector3 prevPosition;
+
     void Start()
     {
         Transform rail = this.findClosestRail();
@@ -18,27 +20,66 @@ public class Movement : MonoBehaviour
             Vector3 backPosition = rail.GetComponent<Rail>().getBackPosition();
             this.transform.position = backPosition;
         }
+        this.prevPosition = this.transform.position;
     }
 
     void Update()
     {
+        Transform closestRail = this.findClosestRail();
+        if (closestRail == null || PauseMenuController.IsGamePause) {
+            return;
+        }
+
+        Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
         // Place the player on the closest rail
-        this.currentRail = this.findClosestRail();
+        this.currentRail = closestRail;
         if (this.currentRail && !PauseMenuController.IsGamePause) {
             this.transform.rotation = this.currentRail.rotation;
             this.transform.Rotate(0,0,90f);
-            Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
-            Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
+            //Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
+            //Debug.DrawLine(this.transform.position, closestPosition, Color.magenta);
         }
 
-        if (this.currentRail && !PauseMenuController.IsGamePause) {
-            
-            this.velocity += this.acceleration;
-            this.transform.position += this.velocity;
-            this.adjustHorizontalPosition();
-            this.adjustVelocity();
-        }
+        this.eulerStep();
+
+        this.adjustHorizontalPosition();
+        this.adjustVerticalPosition();
+        this.adjustVelocity();
+
         this.acceleration = Vector3.zero;
+        this.prevPosition = this.transform.position;
+    }
+
+    void adjustVerticalPosition() {
+        Rail railScript = this.currentRail.GetComponent<Rail>();
+        float verticalDistance = railScript.getPlayerVerticalDistance(this.transform);
+        if (verticalDistance > 0f) {
+            this.transform.position = railScript.getClosestPosition(this.transform);
+        }
+    }
+
+    Vector3 gravity(Vector3 gravityPosition, Transform rail) {
+        Vector3 gravityForce = (gravityPosition - this.transform.position).normalized;
+        Vector3 proj = Vector3.Project(gravityForce, rail.transform.up);
+        gravityForce -= proj; // rejection vector
+        float gravityFactor = 0.05f;
+        return gravityForce * gravityFactor;
+    }
+
+    void eulerStep() {
+        this.velocity += this.acceleration;
+        this.transform.position += this.velocity;
+    }
+
+    bool hasCrossedRail(Transform closestRail) {
+        Vector3 prevToRail = (closestRail.transform.position-this.prevPosition);
+        Vector3 toRail = (closestRail.transform.position-this.transform.position);
+        float prevDot = Vector3.Dot(prevToRail, closestRail.transform.right);
+        float dot = Vector3.Dot(toRail, closestRail.transform.right);
+        bool crossedRail = (prevDot * dot < 0);
+        if (debugger) Debug.DrawRay(this.transform.position, toRail, Color.red, 1f);
+        if (debugger) Debug.Log(Mathf.Sign(dot) + ", " + Mathf.Sign(prevDot) + " crossedRail: "+crossedRail);
+        return crossedRail;
     }
 
     public Vector3 getCurrentRailUp() {
@@ -48,7 +89,6 @@ public class Movement : MonoBehaviour
     void adjustVelocity() {
         float speed = this.velocity.magnitude;
         float direction = Vector3.Dot(this.velocity.normalized, this.currentRail.transform.up.normalized);
-        this.velocity = Vector3.zero;
         this.velocity = this.currentRail.transform.up * speed * direction;
     }
 
@@ -59,8 +99,13 @@ public class Movement : MonoBehaviour
         this.acceleration += force;
     }
 
+    public void moveVertical_TEST(Vector3 direction) {
+        Vector3 force = direction.normalized * 0.5f;
+        this.addForce(force);
+    }
+
     public void moveVertical(Vector3 direction) {
-        Transform rail = this.findVerticalRail(direction); // WARNING: Currently, this is not guaranteed to be a Rail
+        Transform rail = this.findVerticalRail(direction);
         if (rail) {
             Rail railScript = rail.GetComponent<Rail>();
             Vector3 newPos = railScript.getClosestPosition(this.transform);
@@ -91,12 +136,6 @@ public class Movement : MonoBehaviour
         this.GetComponent<BoxCollider>().isTrigger = value;
         return oldValue;
     }
-
-    // void adjustVelocity() {
-    //     float dot = Vector3.Dot(this.velocity, this.currentRail.transform.up);
-    //     float speed = this.velocity.magnitude * Mathf.Sign(dot);
-    //     this.velocity = this.currentRail.transform.up * speed;
-    // }
 
     void adjustHorizontalPosition() {
         // If player is beyond current rail...
@@ -131,41 +170,6 @@ public class Movement : MonoBehaviour
             }
         }
     }
-
-    void changeCurrentRail() {
-        
-    }
-
-    void moveHorizontal_OLD(Vector3 direction) {
-        //this.transform.position += direction*0.7f;//*0.1f;
-        
-
-        // If moving beyond current rail...
-        Rail railScript = this.currentRail.GetComponent<Rail>();
-        float horizontalDistance = railScript.getPlayerHorizontalDistance(this.transform);
-        if (horizontalDistance > 0f) {
-            Debug.Log("if");
-            bool isClosestToFront = railScript.isClosestToFront(this.transform);
-            Transform nextRail = railScript.getNextRail();
-            Transform prevRail = railScript.getPrevRail();
-            if (isClosestToFront && nextRail != null) {
-                this.transform.position = nextRail.GetComponent<Rail>().getBackPosition();
-                this.transform.position += nextRail.transform.up * horizontalDistance;
-                this.currentRail = nextRail.transform;
-            } else if (!isClosestToFront && prevRail != null) {
-                this.transform.position = prevRail.GetComponent<Rail>().getFrontPosition();
-                this.transform.position += -1 * prevRail.transform.up * horizontalDistance;
-                this.currentRail = prevRail.transform;
-            } else {
-                Debug.Log("else");
-                //this.transform.position = railScript.getClosestPosition();
-                Vector3 force = direction * 0.01f;
-                this.addForce(force);
-            }
-        }
-    }
-
-    
 
     Transform findClosestRail() {
         Transform closest = null;
