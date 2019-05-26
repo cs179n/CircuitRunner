@@ -104,7 +104,7 @@ public class LogicGate : MonoBehaviour
             case GateType.NOR:
                 return (count == 0);
             case GateType.XNOR:
-                return (count == 0 || count == total);
+                return (count % 2 == 0);//(count == 0 || count == total);
             case GateType.ODD:
                 return (count % 2 != 0);
             case GateType.EVEN:
