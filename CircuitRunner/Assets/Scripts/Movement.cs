@@ -124,7 +124,6 @@ public class Movement : MonoBehaviour
         bool railTrigger = (this.currentRail) ? this.currentRail.GetComponent<Rail>().setColliderTrigger(false) : false;
         bool playerTrigger = this.setColliderTrigger(false);
          if (Physics.Raycast(origin, direction, out hitInfo, Mathf.Infinity, layerMask)) {
-            Debug.Log("rail");
             rail = hitInfo.collider.transform;
             Debug.DrawRay(this.transform.position, direction*(this.transform.position-hitInfo.collider.transform.position).magnitude, Color.green, 10f);
         }

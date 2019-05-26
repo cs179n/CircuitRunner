@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
         }  
 
-        if (other.gameObject.CompareTag("Brick Wall"))
+        if (other.gameObject.CompareTag("Brick Wall") || other.gameObject.CompareTag("LogicGate"))
         {
             this.loseLife();
             this.GetComponent<Movement>().flipVelocity();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LogicGate : MonoBehaviour
 {
     bool isPowered = false;
-    public GameObject[] railInputs;
+    public List<GameObject> railInputs;
     Vector3 offset = new Vector3(0, 0, 15f);
     Vector3 setposition;
     Vector3 offposition;
@@ -32,6 +32,7 @@ public class LogicGate : MonoBehaviour
         offposition = this.transform.position + offset;
         wall = this.transform.GetChild(0);
 
+        // Generate a TextMesh in front of this gate
         GameObject textGO = new GameObject();
         textGO.transform.parent = this.transform;
         textGO.transform.localPosition = new Vector3(0,0,0);
@@ -39,9 +40,83 @@ public class LogicGate : MonoBehaviour
         TextMesh text = textGO.AddComponent<TextMesh>();
         text.text = this.getGateName();
         text.fontSize = 10;
+
+        // GameObject[] rails =  GameObject.FindGameObjectsWithTag("Rail");
+        // Collider box = this.transform.GetChild(0).GetComponent<BoxCollider>();
+        // Vector3 min = box.bounds.min;
+        // Vector3 max = box.bounds.max;
+        // // Debug.DrawRay(this.transform.position, (min-this.transform.position)*1.1f, Color.green, 10f);
+        // // Debug.DrawRay(this.transform.position, (max-this.transform.position)*1.1f, Color.red, 10f);
+        // foreach(GameObject rail in rails) {
+        //     Collider railBox = rail.GetComponent<CapsuleCollider>();
+        //     Vector3 railMin = railBox.bounds.min;
+        //     Vector3 railMax = railBox.bounds.max;
+        //     Debug.DrawRay(rail.transform.position, (railMax-this.transform.localPosition)*1.1f, Color.red, 10f);
+        //     Debug.Log(rail + " -- " + railMax);
+        // }
     }
 
-    string getGateName() {
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("parent collision " + other);
+        if (other.gameObject.CompareTag("Rail")) {
+            if (!this.railInputs.Contains(other.gameObject)) {
+                this.railInputs.Add(other.gameObject);
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        int count = this.getCount(this.railInputs);
+        int total = this.railInputs.Count;
+        this.isPowered = this.getIsPowered(count, total);
+
+        // TODO: Change localposition instead
+        float step = 30f * Time.deltaTime;
+        Vector3 targetPosition = (this.isPowered) ? offposition : setposition;
+        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, step);
+    }
+
+    public int getCount(List<GameObject> railArray) {
+        int count = 0;
+        foreach (GameObject go in railArray)
+        {
+            bool power = go.GetComponent<Rail>().getIsPowered();
+            if (power) count++;
+        }
+        return count;
+    }
+
+    public bool getIsPowered(int count, int total) {
+        switch(this.gateType) {
+            case GateType.AND:
+                return (count == total);
+            case GateType.OR:
+                return (count >= 1);
+            case GateType.NOT:
+                return (count == 0);
+            case GateType.XOR:
+                return (count % 2 != 0);
+            case GateType.NAND:
+                return (count < total);
+            case GateType.NOR:
+                return (count == 0);
+            case GateType.XNOR:
+                return (count == 0 || count == total);
+            case GateType.ODD:
+                return (count % 2 != 0);
+            case GateType.EVEN:
+                return (count % 2 == 0);
+            case GateType.OPEN:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+        string getGateName() {
         string name = "";
         switch(this.gateType) {
             case GateType.AND:
@@ -82,61 +157,5 @@ public class LogicGate : MonoBehaviour
                 break;
         }
         return name;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        int count = 0;
-        foreach (GameObject go in this.railInputs)
-        {
-            bool power = go.GetComponent<Rail>().getIsPowered();
-            if (power) count++;
-        }
-        int total = this.railInputs.Length;
-        switch(this.gateType) {
-            case GateType.AND:
-                this.isPowered = (count == total);
-                break;
-            case GateType.OR:
-                this.isPowered = (count >= 1);
-                break;
-            case GateType.NOT:
-                this.isPowered = (count == 0);
-                break;
-            case GateType.XOR:
-                this.isPowered = (count % 2 != 0);
-                break;
-            case GateType.NAND:
-                this.isPowered = (count < total);
-                break;
-            case GateType.NOR:
-                this.isPowered = (count == 0);
-                break;
-            case GateType.XNOR:
-                this.isPowered = (count == 0 || count == total);
-                break;
-            case GateType.ODD:
-                this.isPowered = (count % 2 != 0);
-                break;
-            case GateType.EVEN:
-                this.isPowered = (count % 2 == 0);
-                break;
-            case GateType.OPEN:
-                this.isPowered = true;
-                break;
-            default:
-                this.isPowered = false;
-                break;
-        }
-        Vector3 closedPosition = new Vector3(0f, 0f, 0f);
-        //Vector3 openedPosition = new Vector3(0f, 0f, 20f);
-        float step = 30f * Time.deltaTime;
-
-        if (this.isPowered) {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, offposition, step);
-        } else {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, setposition, step);
-        }
     }
 }

@@ -248,7 +248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 0}
   nextRail: {fileID: 1896054565}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &46742535
 CapsuleCollider:
@@ -360,7 +359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 2006534589}
   nextRail: {fileID: 1469560464}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &57242770
 CapsuleCollider:
@@ -643,7 +641,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1564782251}
   nextRail: {fileID: 0}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &110884573
 CapsuleCollider:
@@ -1058,7 +1055,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 434477021}
   nextRail: {fileID: 0}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &229064258
 CapsuleCollider:
@@ -1187,7 +1183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 767509383}
   nextRail: {fileID: 0}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &249417868
 CapsuleCollider:
@@ -1963,7 +1958,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1542683753}
   nextRail: {fileID: 229064256}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &434477024
 CapsuleCollider:
@@ -2934,7 +2928,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1051168871}
   nextRail: {fileID: 249417865}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &767509385
 CapsuleCollider:
@@ -3614,7 +3607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1955877841}
   nextRail: {fileID: 767509383}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1051168873
 CapsuleCollider:
@@ -5134,7 +5126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 57242767}
   nextRail: {fileID: 1564782251}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1469560467
 CapsuleCollider:
@@ -5453,7 +5444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1896054565}
   nextRail: {fileID: 434477021}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1542683756
 CapsuleCollider:
@@ -5793,7 +5783,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1469560464}
   nextRail: {fileID: 110884570}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1564782254
 CapsuleCollider:
@@ -5905,7 +5894,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 0}
   nextRail: {fileID: 1955877841}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1576704134
 CapsuleCollider:
@@ -7971,7 +7959,7 @@ GameObject:
   - component: {fileID: 1864888682}
   m_Layer: 0
   m_Name: Rails
-  m_TagString: Untagged
+  m_TagString: RailContainer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8449,7 +8437,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 46742532}
   nextRail: {fileID: 1542683753}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1896054568
 CapsuleCollider:
@@ -8561,7 +8548,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 1576704131}
   nextRail: {fileID: 1051168871}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!136 &1955877844
 CapsuleCollider:
@@ -8807,7 +8793,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRail: {fileID: 0}
   nextRail: {fileID: 0}
-  Rails: {fileID: 1864888682}
   playerGO: {fileID: 1742154879}
 --- !u!1 &2013245517
 GameObject:

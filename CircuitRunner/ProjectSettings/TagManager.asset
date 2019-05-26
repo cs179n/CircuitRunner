@@ -10,6 +10,8 @@ TagManager:
   - Win
   - Mite
   - RailContainer
+  - Rail
+  - LogicGate
   layers:
   - Default
   - TransparentFX
