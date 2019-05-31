@@ -11,10 +11,12 @@ public class Rail : MonoBehaviour
     public GameObject nextRail;
     RailsController railControllerScript;
     public GameObject playerGO;
-    
-
+    public bool insulated;
+    public bool isInsulated { get => insulated; set => insulated = value; }
+  
     private float length;
     private float poweredTimer;
+    private float insulatorTimer;
 
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -26,7 +28,13 @@ public class Rail : MonoBehaviour
 
         
     }
-    
+    public void Insulate()
+    {
+        Debug.Log("insulate");
+        insulatorTimer = 3f;
+        poweredTimer = 0f;
+        insulated = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -42,9 +50,16 @@ public class Rail : MonoBehaviour
     void Update()
     {
         this.length = (frontTransform.position - backTransform.position).magnitude;
-
+        insulatorTimer -= Time.deltaTime;
         poweredTimer -= Time.deltaTime;
         if (poweredTimer < 0f) poweredTimer = 0f;
+        if (insulatorTimer <= 0f)
+        {
+            insulated = false;
+            insulatorTimer = 0f;
+        }
+            //if (insulated) poweredTimer = 0f;
+
     }
 
     /// LateUpdate is called every frame, if the Behaviour is enabled.
@@ -76,7 +91,9 @@ public class Rail : MonoBehaviour
             return (startDistance < endDistance) ? this.frontTransform.position : this.backTransform.position;
         } else {
             float vDistance = this.getPlayerVerticalDistance(target);
-            if (vDistance >= -0.01f && vDistance < 0.1f) poweredTimer = 1.5f;
+            if (vDistance >= -0.01f && vDistance < 0.1f) {
+                turnOnPower();
+            }
             Vector3 toPlayer = target.position - this.transform.position;
             Vector3 horizontal = Vector3.Project(toPlayer, this.transform.up);
             Vector3 vertical = toPlayer - horizontal;
@@ -125,9 +142,11 @@ public class Rail : MonoBehaviour
     }
 
     public void turnOnPower() {
-        Debug.Log("on");
-        this.poweredTimer = 1.5f;
+        if(!this.isInsulated)
+            this.poweredTimer = 1.5f;
     }
+
+    //public void turnOnInsul
 
     public void turnOffPower() {
         // ????
