@@ -6,33 +6,24 @@ public class LogicGate : MonoBehaviour
 {
     bool isPowered = false;
     public List<GameObject> railInputs;
-    Vector3 offset = new Vector3(0, 0, 15f);
     Vector3 setposition;
     Vector3 offposition;
     public enum GateType {
-        AND,
-        OR,
-        NOT,
-        XOR,
-        NAND,
-        NOR,
-        XNOR,
-        ODD,
-        EVEN,
-        CLOSED,
-        OPEN
+        AND, OR, NOT, XOR, NAND, NOR, XNOR, ODD, EVEN, CLOSED, OPEN
     }
     public GateType gateType = GateType.AND;
     Transform wall;
+    public Font font;
 
     // Start is called before the first frame update
     void Start()
     {
         setposition = this.transform.position;
-        offposition = this.transform.position + offset;
+        offposition = this.transform.position + new Vector3(0, 0, 15f);
         wall = this.transform.GetChild(0);
 
         // Generate a TextMesh in front of this gate
+        
         GameObject textGO = new GameObject();
         textGO.transform.parent = this.transform;
         textGO.transform.localPosition = new Vector3(0,0,0);
@@ -40,20 +31,7 @@ public class LogicGate : MonoBehaviour
         TextMesh text = textGO.AddComponent<TextMesh>();
         text.text = this.getGateName();
         text.fontSize = 10;
-
-        // GameObject[] rails =  GameObject.FindGameObjectsWithTag("Rail");
-        // Collider box = this.transform.GetChild(0).GetComponent<BoxCollider>();
-        // Vector3 min = box.bounds.min;
-        // Vector3 max = box.bounds.max;
-        // // Debug.DrawRay(this.transform.position, (min-this.transform.position)*1.1f, Color.green, 10f);
-        // // Debug.DrawRay(this.transform.position, (max-this.transform.position)*1.1f, Color.red, 10f);
-        // foreach(GameObject rail in rails) {
-        //     Collider railBox = rail.GetComponent<CapsuleCollider>();
-        //     Vector3 railMin = railBox.bounds.min;
-        //     Vector3 railMax = railBox.bounds.max;
-        //     Debug.DrawRay(rail.transform.position, (railMax-this.transform.localPosition)*1.1f, Color.red, 10f);
-        //     Debug.Log(rail + " -- " + railMax);
-        // }
+        text.anchor = TextAnchor.MiddleCenter;
     }
 
     void OnTriggerEnter(Collider other)
@@ -73,7 +51,34 @@ public class LogicGate : MonoBehaviour
         int total = this.railInputs.Count;
         this.isPowered = this.getIsPowered(count, total);
 
-        // TODO: Change localposition instead
+        
+        this.transform.GetChild(0).GetComponent<BoxCollider>().enabled = !this.isPowered;
+        
+        //this.retract();
+        this.retract2();
+    }
+
+    void retract2() {
+        Transform topPivot = this.transform.GetChild(1);
+        Transform botPivot = this.transform.GetChild(2);
+        if (this.isPowered)
+        {
+            topPivot.localScale -= new Vector3(0, 0.1f, 0);
+            if (topPivot.localScale.y < 0f) topPivot.localScale = new Vector3(1, 0, 1);
+            botPivot.localScale -= new Vector3(0, 0.1f, 0);
+            if (botPivot.localScale.y < 0f) botPivot.localScale = new Vector3(1, 0, 1);
+        }
+        else
+        {
+            topPivot.localScale += new Vector3(0, 0.1f, 0);
+            if (topPivot.localScale.y > 1f) topPivot.localScale = new Vector3(1, 1, 1);
+            botPivot.localScale += new Vector3(0, 0.1f, 0);
+            if (botPivot.localScale.y > 1f) botPivot.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    void retract() {
+         // TODO: Change localposition instead
         float step = 30f * Time.deltaTime;
         Vector3 targetPosition = (this.isPowered) ? offposition : setposition;
         this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, step);
@@ -81,9 +86,9 @@ public class LogicGate : MonoBehaviour
 
     public int getCount(List<GameObject> railArray) {
         int count = 0;
-        foreach (GameObject go in railArray)
+        foreach (GameObject rail in railArray)
         {
-            bool power = go.GetComponent<Rail>().getIsPowered();
+            bool power = rail.GetComponent<Rail>().getIsPowered();
             if (power) count++;
         }
         return count;
