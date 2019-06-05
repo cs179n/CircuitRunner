@@ -15,12 +15,12 @@ public class Movement : MonoBehaviour
     void Start()
     {
         this.railContainer = GameObject.FindGameObjectWithTag("RailContainer");
-        Transform rail = this.findClosestRail();
-        if (rail) {
-            this.currentRail = rail;
-            Vector3 backPosition = rail.GetComponent<Rail>().getBackPosition();
-            this.transform.position = backPosition;
-        }
+        // Transform rail = this.findClosestRail();
+        // if (rail) {
+        //     this.currentRail = rail;
+        //     Vector3 backPosition = rail.GetComponent<Rail>().getBackPosition();
+        //     this.transform.position = backPosition;
+        // }
         this.prevPosition = this.transform.position;
     }
 
@@ -30,10 +30,10 @@ public class Movement : MonoBehaviour
         if (closestRail == null || PauseMenuController.IsGamePause) {
             return;
         }
-
+        this.currentRail = closestRail;
         Vector3 closestPosition = this.currentRail.GetComponent<Rail>().getClosestPosition(this.transform);
         // Place the player on the closest rail
-        this.currentRail = closestRail;
+        //this.currentRail = closestRail;
         if (this.currentRail && !PauseMenuController.IsGamePause) {
             this.transform.rotation = this.currentRail.rotation;
             this.transform.Rotate(0,0,90f);
