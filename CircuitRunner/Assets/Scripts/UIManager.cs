@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public Image faderScreen;
 
     public bool timeFinished;
+    public int sceneNum;
 
     private const float kMaxTimeSecsLevel1 = 45; 
     public const int kMaxAmtShields = 5;
@@ -91,6 +92,8 @@ public class UIManager : MonoBehaviour
         }
         else if(Player.IsWinner)
         {
+            sceneNum = SceneManager.GetActiveScene().buildIndex;
+
             Vector4 temp;
 
             temp = new Vector4(faderScreen.color.r, faderScreen.color.g, faderScreen.color.b, 1.0f);

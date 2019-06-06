@@ -45,11 +45,14 @@ public class Player : MonoBehaviour
                 numOfShields++;
             }
             Destroy(other.gameObject);
-        }   
-        
-        if (other.gameObject.CompareTag ("Battery Pick Up"))
+        }
+
+        if (other.gameObject.CompareTag("Battery Pick Up"))
         {
-            playerLives++;
+            if (playerLives < 10)
+            {
+                playerLives++;
+            }
             Destroy(other.gameObject);
         }  
 
