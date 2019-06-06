@@ -23,7 +23,15 @@ public class PlayerControls : MonoBehaviour
             movementScript.addForce(-forwardForce);
             this.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = true;
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Player.NumOfShields > 0)
+            {
+                Player.NumOfShields--;
+                movementScript.currentRail.GetComponent<Rail>().Insulate();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
             movementScript.moveVertical(this.transform.up);
         } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {

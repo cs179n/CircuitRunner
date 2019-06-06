@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     public bool debugger = false;
     // Start is called before the first frame update
-    private Transform currentRail = null;
+    public Transform currentRail = null;
     private Vector3 velocity = Vector3.zero;
     private Vector3 acceleration = Vector3.zero;
     public GameObject railContainer;

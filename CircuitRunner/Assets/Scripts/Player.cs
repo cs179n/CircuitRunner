@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
             this.loseLife();
             Vector3 velocity = this.GetComponent<Movement>().getVelocity();
             other.gameObject.GetComponent<Enemy>().knockOut(velocity);
-            
+            other.GetComponent<AudioSource>().Play();
             //Vector3 target = other.transform.position + velocity;
             //float step = 1f * Time.deltaTime;
             //other.transform.position = Vector3.MoveTowards(other.transform.position, target, step);
