@@ -942,7 +942,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 1b24dd6cbe84e9d439604129d2645abf, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.648
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4710,16 +4710,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8362121261696770487, guid: 5659bb07e07bd7241b901ab942edc08c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.995
-      objectReference: {fileID: 0}
-    - target: {fileID: 3607049471523834260, guid: 5659bb07e07bd7241b901ab942edc08c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.995
-      objectReference: {fileID: 0}
     - target: {fileID: 6820506539432331412, guid: 5659bb07e07bd7241b901ab942edc08c,
         type: 3}
       propertyPath: gateShape
@@ -4754,6 +4744,16 @@ PrefabInstance:
         type: 3}
       propertyPath: gateType
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8362121261696770487, guid: 5659bb07e07bd7241b901ab942edc08c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.995
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607049471523834260, guid: 5659bb07e07bd7241b901ab942edc08c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5659bb07e07bd7241b901ab942edc08c, type: 3}
@@ -5299,6 +5299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugger: 1
+  currentRail: {fileID: 0}
   railContainer: {fileID: 1864888680}
 --- !u!114 &1742154886
 MonoBehaviour:
