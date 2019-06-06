@@ -17,23 +17,56 @@ public class LogicGate : MonoBehaviour
     public GateType gateType = GateType.AND;
     public GateShape gateShape = GateShape._1x1;
     public Font font;
+    public Material matAND, matOR, matNOT, matXOR, matODD, matEVEN;
 
-
-    Transform topPivot, botPivot, frameworkLeft, frameworkRight, frameworkTop, frameworkBottom, body;
+    Transform topPivot, botPivot, body;
+    Transform frameworkLeft, frameworkRight, frameworkTop, frameworkBottom;
+    Transform topGate, bottomGate;
 
     // Start is called before the first frame update
     void Start()
     {
-        body            = this.transform.GetChild(0).GetChild(0);
-        topPivot        = this.transform.GetChild(0).GetChild(1);
-        botPivot        = this.transform.GetChild(0).GetChild(2);
-        frameworkLeft   = this.transform.GetChild(0).GetChild(3).GetChild(0);
-        frameworkRight  = this.transform.GetChild(0).GetChild(3).GetChild(1);
-        frameworkTop    = this.transform.GetChild(0).GetChild(3).GetChild(2);
-        frameworkBottom = this.transform.GetChild(0).GetChild(3).GetChild(3);
+        this.body            = this.transform.GetChild(0).GetChild(0);
+        this.topPivot        = this.transform.GetChild(0).GetChild(1);
+        this.botPivot        = this.transform.GetChild(0).GetChild(2);
+        this.topGate         = this.topPivot.GetChild(0);
+        this.bottomGate      = this.botPivot.GetChild(0);
+        this.frameworkLeft   = this.transform.GetChild(0).GetChild(3).GetChild(0);
+        this.frameworkRight  = this.transform.GetChild(0).GetChild(3).GetChild(1);
+        this.frameworkTop    = this.transform.GetChild(0).GetChild(3).GetChild(2);
+        this.frameworkBottom = this.transform.GetChild(0).GetChild(3).GetChild(3);
 
         createText();
         reshape();
+        setColor();
+    }
+
+    void setColor() {
+        Material[] materials = new Material[1];
+        switch (gateType) {
+            case GateType.AND: 
+                Debug.Log("mat AND");
+                materials[0] = this.matAND; break;
+            case GateType.OR: 
+                Debug.Log("mat OR");
+                materials[0] = this.matOR; break;
+            case GateType.NOT: 
+                Debug.Log("mat NOT");
+                materials[0] = this.matNOT; break;
+            case GateType.EVEN: 
+            case GateType.XNOR:
+                Debug.Log("mat EVEN");
+                materials[0] = this.matEVEN; break;
+            case GateType.ODD: 
+            case GateType.XOR:
+                Debug.Log("mat ODD");
+                materials[0] = this.matODD; break;
+        }
+        this.topGate.GetComponent<MeshRenderer>().materials = materials;
+        this.bottomGate.GetComponent<MeshRenderer>().materials = materials;
+
+        //this.topGate.GetComponent<MeshRenderer>().materials[0] = this.matOR;
+        //this.bottomGate.GetComponent<MeshRenderer>().materials[0] = this.matOR;
     }
 
     void reshape() {
@@ -183,6 +216,7 @@ public class LogicGate : MonoBehaviour
                 name += "NOT";
                 break;
             case GateType.XOR:
+            case GateType.ODD:
                 name += "XOR";
                 break;
             case GateType.NAND:
@@ -192,19 +226,14 @@ public class LogicGate : MonoBehaviour
                 name += "NOR";
                 break;
             case GateType.XNOR:
+            case GateType.EVEN:
                 name += "XNOR";
                 break;
-            case GateType.ODD:
-                name += "ODD";
-                break;
-            case GateType.EVEN:
-                name += "EVEN";
-                break;
             case GateType.OPEN:
-                name += "OPEN";
+                name += " ";
                 break;
             case GateType.CLOSED:
-                name += "CLOSED";
+                name += "WALL";
                 break;
             default:
                 name += "--default--";

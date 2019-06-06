@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 4712134241278250407}
   - component: {fileID: 3922328196196164909}
   m_Layer: 0
-  m_Name: TopGate
+  m_Name: BottomGate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +291,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 94994ff4033e7204da39fc95152ce653, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -594,6 +594,12 @@ MonoBehaviour:
   gateType: 0
   gateShape: 0
   font: {fileID: 12800000, guid: b88d083c873186e45868939b8c51c03c, type: 3}
+  matAND: {fileID: 2100000, guid: df61aa1aa6f28ce4aa33d4e65f763590, type: 2}
+  matOR: {fileID: 2100000, guid: 67fb80a24ff919148b83f8762e9cc7ef, type: 2}
+  matNOT: {fileID: 2100000, guid: d54e86a61a341034b85a76f0a5eb7474, type: 2}
+  matXOR: {fileID: 2100000, guid: 94994ff4033e7204da39fc95152ce653, type: 2}
+  matODD: {fileID: 2100000, guid: 94994ff4033e7204da39fc95152ce653, type: 2}
+  matEVEN: {fileID: 2100000, guid: 709147b13efbc324ca58968e9db840bf, type: 2}
 --- !u!1 &7877097260977344829
 GameObject:
   m_ObjectHideFlags: 0
