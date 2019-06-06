@@ -11,27 +11,64 @@ public class LogicGate : MonoBehaviour
     public enum GateType {
         AND, OR, NOT, XOR, NAND, NOR, XNOR, ODD, EVEN, CLOSED, OPEN
     }
+    public enum GateShape { /* width x height */
+        _1x1, _1x3
+    }
     public GateType gateType = GateType.AND;
-    Transform wall;
+    public GateShape gateShape = GateShape._1x1;
     public Font font;
+
+
+    Transform topPivot, botPivot, frameworkLeft, frameworkRight, frameworkTop, frameworkBottom, body;
 
     // Start is called before the first frame update
     void Start()
     {
-        setposition = this.transform.position;
-        offposition = this.transform.position + new Vector3(0, 0, 15f);
-        wall = this.transform.GetChild(0);
+        body            = this.transform.GetChild(0).GetChild(0);
+        topPivot        = this.transform.GetChild(0).GetChild(1);
+        botPivot        = this.transform.GetChild(0).GetChild(2);
+        frameworkLeft   = this.transform.GetChild(0).GetChild(3).GetChild(0);
+        frameworkRight  = this.transform.GetChild(0).GetChild(3).GetChild(1);
+        frameworkTop    = this.transform.GetChild(0).GetChild(3).GetChild(2);
+        frameworkBottom = this.transform.GetChild(0).GetChild(3).GetChild(3);
 
-        // Generate a TextMesh in front of this gate
+        createText();
+        reshape();
+    }
+
+    void reshape() {
         
+        switch (this.gateShape) {
+            case GateShape._1x3:
+                this.frameworkLeft.localScale    = new Vector3(0.025f, 1.0f, 0.1f);
+                this.frameworkRight.localScale   = new Vector3(0.025f, 1.0f, 0.1f);
+                this.frameworkTop.localScale     = new Vector3(0.0125f, 0.45f, 0.1f);
+                this.frameworkBottom.localScale  = new Vector3(0.0125f, 0.45f, 0.1f);
+                break;
+            case GateShape._1x1:
+                this.frameworkLeft.localScale    = new Vector3(0.025f, 1.0f, 0.1f);
+                this.frameworkRight.localScale   = new Vector3(0.025f, 1.0f, 0.1f);
+                this.frameworkTop.localScale     = new Vector3(0.05f, 0.45f, 0.1f);
+                this.frameworkBottom.localScale  = new Vector3(0.05f, 0.45f, 0.1f);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void createText() {
         GameObject textGO = new GameObject();
+        textGO.name = "Label";
         textGO.transform.parent = this.transform;
-        textGO.transform.localPosition = new Vector3(0,0,0);
+        textGO.transform.localPosition = new Vector3(0,0.5f,0);
         textGO.transform.localRotation = Quaternion.identity;
+        textGO.transform.localScale = new Vector3(0.5f,1,1);
+
         TextMesh text = textGO.AddComponent<TextMesh>();
         text.text = this.getGateName();
-        text.fontSize = 10;
+        text.fontSize = 12;
         text.anchor = TextAnchor.MiddleCenter;
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -52,36 +89,48 @@ public class LogicGate : MonoBehaviour
         this.isPowered = this.getIsPowered(count, total);
 
         
-        this.transform.GetChild(0).GetComponent<BoxCollider>().enabled = !this.isPowered;
+        this.body.GetComponent<BoxCollider>().enabled = !this.isPowered;
         
         //this.retract();
-        this.retract2();
-    }
-
-    void retract2() {
-        Transform topPivot = this.transform.GetChild(1);
-        Transform botPivot = this.transform.GetChild(2);
-        if (this.isPowered)
-        {
-            topPivot.localScale -= new Vector3(0, 0.1f, 0);
-            if (topPivot.localScale.y < 0f) topPivot.localScale = new Vector3(1, 0, 1);
-            botPivot.localScale -= new Vector3(0, 0.1f, 0);
-            if (botPivot.localScale.y < 0f) botPivot.localScale = new Vector3(1, 0, 1);
-        }
-        else
-        {
-            topPivot.localScale += new Vector3(0, 0.1f, 0);
-            if (topPivot.localScale.y > 1f) topPivot.localScale = new Vector3(1, 1, 1);
-            botPivot.localScale += new Vector3(0, 0.1f, 0);
-            if (botPivot.localScale.y > 1f) botPivot.localScale = new Vector3(1, 1, 1);
-        }
+        this.retract();
     }
 
     void retract() {
-         // TODO: Change localposition instead
-        float step = 30f * Time.deltaTime;
-        Vector3 targetPosition = (this.isPowered) ? offposition : setposition;
-        this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, step);
+        // Open and closes the gate depending on it's powered state
+        if (this.isPowered)
+        {
+            this.topPivot.localScale -= new Vector3(0, 0.1f, 0);
+            if (this.topPivot.localScale.y <= 0f) {
+                this.topPivot.localScale = new Vector3(1, 0, 1);
+                //this.topPivot.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
+            this.botPivot.localScale -= new Vector3(0, 0.1f, 0);
+            if (this.botPivot.localScale.y <= 0f) {
+                this.botPivot.localScale = new Vector3(1, 0, 1);
+                //this.botPivot.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+        else
+        {
+            this.topPivot.localScale += new Vector3(0, 0.1f, 0);
+            if (this.topPivot.localScale.y >= 1f) {
+                this.topPivot.localScale = new Vector3(1, 1, 1);
+                //this.topPivot.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            }
+            this.botPivot.localScale += new Vector3(0, 0.1f, 0);
+            if (this.botPivot.localScale.y >= 1f) {
+                this.botPivot.localScale = new Vector3(1, 1, 1);
+                //this.botPivot.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+    }
+
+    void retract_OLD() {
+        // setposition must be a position calculated at Start()
+        // offposition must be a field variable
+        //float step = 30f * Time.deltaTime;
+        //Vector3 targetPosition = (this.isPowered) ? offposition : setposition; 
+        //this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, step);
     }
 
     public int getCount(List<GameObject> railArray) {
