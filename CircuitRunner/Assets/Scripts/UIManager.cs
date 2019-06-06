@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour
 
             if (restartTimer <= restartDelay)
             {
-                restartTimerText.text = "Restarting in \n" + (restartDelay - restartTimer).ToString("f0");
+                restartTimerText.text = "Starting Next level in \n" + (restartDelay - restartTimer).ToString("f0");
             }
 
             // .. if it reaches the restart delay...
@@ -118,7 +118,7 @@ public class UIManager : MonoBehaviour
                 resetLevel1();
 
                 // display restart countdown 
-                SceneManager.LoadScene(scene.name);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
             }
         }
     }
