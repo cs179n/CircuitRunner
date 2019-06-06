@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Brick Wall") || other.gameObject.CompareTag("LogicGate"))
         {
             this.loseLife();
+            other.gameObject.GetComponent<AudioSource>().Play();
             this.GetComponent<Movement>().flipVelocity();
         }
         if (other.gameObject.CompareTag("Win"))
@@ -68,7 +69,7 @@ public class Player : MonoBehaviour
             this.loseLife();
             Vector3 velocity = this.GetComponent<Movement>().getVelocity();
             other.gameObject.GetComponent<Enemy>().knockOut(velocity);
-            other.GetComponent<AudioSource>().Play();
+            other.gameObject.GetComponent<AudioSource>().Play();
             //Vector3 target = other.transform.position + velocity;
             //float step = 1f * Time.deltaTime;
             //other.transform.position = Vector3.MoveTowards(other.transform.position, target, step);
