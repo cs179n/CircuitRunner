@@ -74,6 +74,9 @@ public class Player : MonoBehaviour
             //float step = 1f * Time.deltaTime;
             //other.transform.position = Vector3.MoveTowards(other.transform.position, target, step);
         }
+        if (other.gameObject.CompareTag("Bullet")) {
+            this.loseLife();
+        }
     }
 
     void loseLife() {
