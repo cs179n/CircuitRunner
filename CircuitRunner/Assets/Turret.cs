@@ -7,6 +7,7 @@ public class Turret : MonoBehaviour
     Transform cannon;
     public Transform target;
     public GameObject bulletPrefab;
+    public float startDelay = 1f;
     float reloadTimeMax = 3f;
     float reloadTime = 3f;
     // Start is called before the first frame update
@@ -23,7 +24,10 @@ public class Turret : MonoBehaviour
         //this.cannon.rotation = Quaternion.RotateTowards(from, to, step);
         this.cannon.transform.LookAt(this.target);
 
-        this.reloadTime -= Time.deltaTime;
+        this.startDelay -= Time.deltaTime;
+        if (this.startDelay <= 0f) {
+            this.reloadTime -= Time.deltaTime;
+        }
         if (this.reloadTime <= 0f) {
             this.createBullet();
             this.reloadTime = this.reloadTimeMax;

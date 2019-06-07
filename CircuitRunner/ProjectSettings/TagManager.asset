@@ -12,6 +12,7 @@ TagManager:
   - RailContainer
   - Rail
   - LogicGate
+  - Bullet
   layers:
   - Default
   - TransparentFX
