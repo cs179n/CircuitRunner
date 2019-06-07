@@ -91,6 +91,10 @@ public class UIManager : MonoBehaviour
         }
         else if(Player.IsWinner)
         {
+            if (SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
             Vector4 temp;
 
             temp = new Vector4(faderScreen.color.r, faderScreen.color.g, faderScreen.color.b, 1.0f);
