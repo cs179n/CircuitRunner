@@ -7,7 +7,7 @@ public class BulletStart : MonoBehaviour
     // Start is called before the first frame update
     GameObject target;
     Vector3 targetPos;
-    float lifetime = 5f;
+    
     void Start()
     {
         this.target = GameObject.FindGameObjectWithTag("Player");
@@ -22,6 +22,7 @@ public class BulletStart : MonoBehaviour
         this.spin();
         
         Destroy(this.gameObject, 3f);
+        
         
     }
 
