@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public bool timeFinished;
     public int sceneNum;
 
+    public GameObject State;
+
     private const float kMaxTimeSecsLevel1 = 45; 
     public const int kMaxAmtShields = 5;
 
@@ -32,6 +34,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       this.State = GameObject.FindGameObjectWithTag("State");
        // get the start time of the level
        startTime = Time.time; 
        string minutes = ((int)kMaxTimeSecsLevel1 / 60).ToString();
@@ -92,8 +95,7 @@ public class UIManager : MonoBehaviour
         }
         else if(Player.IsWinner)
         {
-            sceneNum = SceneManager.GetActiveScene().buildIndex;
-
+            //sceneNum = SceneManager.GetActiveScene().buildIndex;
             Vector4 temp;
 
             temp = new Vector4(faderScreen.color.r, faderScreen.color.g, faderScreen.color.b, 1.0f);
@@ -110,7 +112,7 @@ public class UIManager : MonoBehaviour
 
             if (restartTimer <= restartDelay)
             {
-                restartTimerText.text = "Restarting in \n" + (restartDelay - restartTimer).ToString("f0");
+                restartTimerText.text = "Starting next level in \n" + (restartDelay - restartTimer).ToString("f0");
             }
 
             // .. if it reaches the restart delay...
@@ -121,7 +123,7 @@ public class UIManager : MonoBehaviour
                 resetLevel1();
 
                 // display restart countdown 
-                SceneManager.LoadScene(scene.name);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
     }

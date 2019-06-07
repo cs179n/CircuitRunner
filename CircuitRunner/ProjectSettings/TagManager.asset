@@ -12,6 +12,7 @@ TagManager:
   - RailContainer
   - Rail
   - LogicGate
+  - State
   layers:
   - Default
   - TransparentFX
