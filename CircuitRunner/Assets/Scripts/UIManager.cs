@@ -93,6 +93,7 @@ public class UIManager : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().buildIndex == 3)
             {
+                resetLevel1();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             Vector4 temp;
